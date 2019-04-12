@@ -7,7 +7,17 @@ public class Runner {
 
     public static void main(String[] args) {
 
-        String chessBoard [][] = {
+        /*
+        Lowercase = AI
+        Uppercase = Player
+        R = Rook
+        N = Knight
+        B = Bishop
+        Q = Queen
+        K = King
+        P = Pawn
+        */
+        String[][] defaultBoard = {
                 {"r", "n", "b", "q", "k", "b", "n", "r"},
                 {"p", "p", "p", "p", "p", "p", "p", "p"},
                 {" ", " ", " ", " ", " ", " ", " ", " "},
@@ -16,6 +26,8 @@ public class Runner {
                 {" ", " ", " ", " ", " ", " ", " ", " "},
                 {"P", "P", "P", "P", "P", "P", "P", "P"},
                 {"R", "N", "B", "Q", "K", "B", "N", "R"}};
-        }
 
+        Board chessBoard = new Board(defaultBoard);
+        chessBoard.printBoard();
     }
+}

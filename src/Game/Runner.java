@@ -29,5 +29,6 @@ public class Runner {
 
         Board chessBoard = new Board(defaultBoard);
         chessBoard.printBoard();
+        System.out.println(FindMoves.possibleMoves());
     }
 }

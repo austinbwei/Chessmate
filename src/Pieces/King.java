@@ -2,9 +2,9 @@ package Pieces;
 
 import Game.Board;
 
-public class King {
+public class King extends Piece {
 
-    private static String[][] chessBoard = Board.getBoard();
+    private static String[][] chessBoard;
     private static int humanKingCoordinate;
     private static int computerKingCoordinate;
 
@@ -14,6 +14,8 @@ public class King {
      * @return Possible moves
      */
     public static String legalMoves(int i) {
+        chessBoard = Board.getBoard();
+
         String moves = "";
         String takenPiece;
 
@@ -22,6 +24,7 @@ public class King {
 
        //Navigate move coordinates around the King
         for(int j = 0; j < 9; j++) {
+
             if(j != 4) {
                 try {
 
@@ -55,7 +58,7 @@ public class King {
     }
 
     //Ensure king is not moving into a check condition
-    private static boolean isKingSafe() {
+    public static boolean isKingSafe() {
         return true;
     }
 

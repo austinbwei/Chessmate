@@ -1,24 +1,21 @@
 package Pieces;
 
-import Game.Player;
+import Game.Board;
 
 public class Pawn extends Piece {
-    Type type;
 
-    public Pawn(int x, int y, Player player) {
-        super(x, y, player);
-        type = Type.PAWN;
+    private static String[][] chessBoard;
+
+    public static String legalMoves(int i) {
+        chessBoard = Board.getBoard();
+
+        String moves = "";
+        String takenPiece;
+
+        int row = i/8;
+        int column = i%8;
+
+        return moves;
     }
 
-    public boolean isValidPath(int x, int y) {
-        return false;
-    }
-
-    public int[][] drawPath(int startX, int startY, int endX, int endY) {
-        return null;
-    }
-
-    public Type getType() {
-        return Type.PAWN;
-    }
 }

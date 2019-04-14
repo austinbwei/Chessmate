@@ -1,20 +1,21 @@
 package Pieces;
 
-import Game.*;
+import Game.Board;
 
 public abstract class Piece {
-    public int x, y;
-    public Player player;
 
-    public Piece(int x, int y, Player player) {
-        this.x = x;
-        this.y = y;
-        this.player = player;
+    private static String[][] chessBoard;
+
+    public static String legalMoves(int i) {
+        chessBoard = Board.getBoard();
+
+        String moves = "";
+        String takenPiece;
+
+        int row = i/8;
+        int column = i%8;
+
+        return moves;
     }
 
-    public abstract boolean isValidPath(int x, int y);
-
-    public abstract int [][] drawPath(int startX, int startY, int endX, int endY);
-
-    public abstract Type getType();
 }

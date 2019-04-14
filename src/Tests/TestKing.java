@@ -17,11 +17,11 @@ public class TestKing {
                 {" ", " ", " ", " ", " ", " ", " ", " "},
                 {" ", " ", " ", " ", " ", " ", " ", " "},
                 {" ", " ", " ", " ", " ", " ", " ", " "},
-                {" ", " ", " ", "P", "P", "P", " ", " "},
-                {" ", " ", " ", "Q", "K", "B", " ", " "}};
+                {"P", "P", "P", "P", "P", "P", "P", "P"},
+                {"R", "N", "B", "Q", "K", "B", "N", "R"}};
         Board.setBoard(testKingOptions1);
 
-        String expected = "";
+        String expected = "7150 7152 7655 7657 ";
         assertEquals("King has invalid initial move options", expected, FindMoves.possibleMoves());
     }
 
@@ -65,14 +65,14 @@ public class TestKing {
                 {" ", " ", " ", " ", " ", " ", " ", " "},
                 {" ", " ", " ", " ", " ", " ", " ", " "},
                 {" ", " ", " ", " ", " ", " ", " ", " "},
-                {" ", " ", " ", " ", "P", "p", " ", " "},
-                {" ", " ", " ", " ", "K", "r", " ", " "},
-                {" ", " ", " ", "b", "n", "Q", " ", " "},
+                {" ", " ", " ", "q", "k", "p", " ", " "},
+                {" ", " ", " ", "p", "K", "r", " ", " "},
+                {" ", " ", " ", "b", "n", "p", " ", " "},
                 {" ", " ", " ", " ", " ", " ", " ", " "},
                 {" ", " ", " ", " ", " ", " ", " ", " "}};
         Board.setBoard(testKingOptions4);
 
-        String expected = "4433 4435p4443 4445r4453b4454n";
+        String expected = "4433q4434k4435p4443p4445r4453b4454n4455p";
         assertEquals("King has invalid piece detection", expected, FindMoves.possibleMoves());
     }
 }

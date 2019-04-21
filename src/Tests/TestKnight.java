@@ -9,23 +9,6 @@ import static org.junit.Assert.*;
 public class TestKnight {
 
     @Test
-    public void possibleKnightMove1() {
-        String[][] testKnightOptions1 = {
-                {" ", " ", " ", " ", " ", " ", " ", " "},
-                {" ", " ", " ", " ", " ", " ", " ", " "},
-                {" ", " ", " ", " ", " ", " ", " ", " "},
-                {" ", " ", " ", " ", " ", " ", " ", " "},
-                {" ", " ", " ", " ", " ", " ", " ", " "},
-                {" ", " ", " ", " ", " ", " ", " ", " "},
-                {"P", "P", "P", "P", "P", "P", "P", "P"},
-                {"R", "N", "B", "Q", "K", "B", "N", "R"}};
-        Board.setBoard(testKnightOptions1);
-
-        String expected = "7150 7152 7655 7657 ";
-        assertEquals("Knight has invalid initial move options", expected, FindMoves.possibleMoves());
-    }
-
-    @Test
     public void possibleKnightMove2() {
         String[][] testKnightOptions2 = {
                 {" ", " ", " ", " ", " ", " ", " ", " "},

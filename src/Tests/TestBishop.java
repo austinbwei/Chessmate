@@ -9,23 +9,6 @@ import static org.junit.Assert.*;
 public class TestBishop {
 
     @Test
-    public void possibleBishopMove1() {
-        String[][] testBishopOptions1 = {
-                {" ", " ", " ", " ", " ", " ", " ", " "},
-                {" ", " ", " ", " ", " ", " ", " ", " "},
-                {" ", " ", " ", " ", " ", " ", " ", " "},
-                {" ", " ", " ", " ", " ", " ", " ", " "},
-                {" ", " ", " ", " ", " ", " ", " ", " "},
-                {" ", " ", " ", " ", " ", " ", " ", " "},
-                {"P", "P", "P", "P", "P", "P", "P", "P"},
-                {"R", "N", "B", "Q", "K", "B", "N", "R"}};
-        Board.setBoard(testBishopOptions1);
-
-        String expected = "7150 7152 7655 7657 ";
-        assertEquals("Bishop has invalid initial move options", expected, FindMoves.possibleMoves());
-    }
-
-    @Test
     public void possibleBishopMove2() {
         String[][] testBishopOptions2 = {
                 {" ", " ", " ", " ", " ", " ", " ", " "},

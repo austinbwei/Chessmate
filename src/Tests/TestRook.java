@@ -9,23 +9,6 @@ import static org.junit.Assert.*;
 public class TestRook {
 
     @Test
-    public void possibleRookMove1() {
-        String[][] testRookOptions1 = {
-                {" ", " ", " ", " ", " ", " ", " ", " "},
-                {" ", " ", " ", " ", " ", " ", " ", " "},
-                {" ", " ", " ", " ", " ", " ", " ", " "},
-                {" ", " ", " ", " ", " ", " ", " ", " "},
-                {" ", " ", " ", " ", " ", " ", " ", " "},
-                {" ", " ", " ", " ", " ", " ", " ", " "},
-                {"P", "P", "P", "P", "P", "P", "P", "P"},
-                {"R", "N", "B", "Q", "K", "B", "N", "R"}};
-        Board.setBoard(testRookOptions1);
-
-        String expected = "7150 7152 7655 7657 ";
-        assertEquals("Rook has invalid initial move options", expected, FindMoves.possibleMoves());
-    }
-
-    @Test
     public void possibleRookMove2() {
         String[][] testRookOptions2 = {
                 {" ", " ", " ", " ", " ", " ", " ", " "},

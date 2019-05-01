@@ -10,7 +10,6 @@ public class FindMoves {
      */
     public static String possibleMoves() {
         String[][] chessBoard = Board.getBoard();
-
         String list = "";
         for(int i = 0; i < 64; i++) {
             switch(chessBoard[i/8][i%8]) {

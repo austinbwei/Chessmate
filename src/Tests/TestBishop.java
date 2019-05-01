@@ -55,7 +55,7 @@ public class TestBishop {
                 {" ", " ", " ", " ", " ", " ", " ", " "}};
         Board.setBoard(testBishopOptions4);
 
-        String expected = "4443p4445p4463b4465b";
+        String expected = "4433p4435p4453b4455b";
         assertEquals("Bishop has invalid piece detection", expected, FindMoves.possibleMoves());
     }
 }

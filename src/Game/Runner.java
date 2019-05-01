@@ -1,5 +1,7 @@
 package Game;
 
+import javax.swing.*;
+
 /**
  * @author Austin Weiler
  */
@@ -29,6 +31,15 @@ public class Runner {
 
         Board chessBoard = new Board(defaultBoard);
         chessBoard.printBoard();
-        System.out.println(FindMoves.possibleMoves());
+
+        JFrame jframe = new JFrame("Chess");
+        jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        GUI gui = new GUI();
+        jframe.add(gui);
+        jframe.setSize(800, 800);
+        jframe.setVisible(true);
+
+//        Move.makeMove(AIPlayer.alphaBeta("", 0, -1000000, 1000000, AIPlayer.DEFAULT_DEPTH));
+//        chessBoard.printBoard();
     }
 }

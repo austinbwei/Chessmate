@@ -21,7 +21,7 @@ public class TestPawn {
                 {" ", " ", " ", " ", " ", " ", " ", " "}};
         Board.setBoard(testPawnOptions2);
 
-        String expected = "6757 6747 6757 6747 ";
+        String expected = "6757 6747 ";
         assertEquals("Pawn has invalid initial move options", expected, FindMoves.possibleMoves());
     }
 
@@ -38,7 +38,7 @@ public class TestPawn {
                 {" ", " ", " ", " ", " ", " ", " ", " "}};
         Board.setBoard(testPawnOptions3);
 
-        String expected = "3424 3424 ";
+        String expected = "3424 ";
         assertEquals("Pawn has invalid open move options", expected, FindMoves.possibleMoves());
     }
 
@@ -55,7 +55,7 @@ public class TestPawn {
                 {" ", " ", " ", " ", " ", " ", " ", " "}};
         Board.setBoard(testPawnOptions4);
 
-        String expected = "4434 4433r4434 4435n";
+        String expected = "4433r4435n4434 ";
         assertEquals("Pawn has invalid piece detection", expected, FindMoves.possibleMoves());
     }
 
@@ -72,7 +72,7 @@ public class TestPawn {
                 {" ", " ", " ", " ", " ", " ", " ", " "}};
         Board.setBoard(testPawnOptions5);
 
-        String expected = "33 RP33 BP33 NP33 QP33 RP33 BP33 NP33 QP";
+        String expected = "33 RP33 BP33 NP33 QP";
         assertEquals("Pawn has invalid standard promotion", expected, FindMoves.possibleMoves());
     }
 
@@ -89,7 +89,7 @@ public class TestPawn {
                 {" ", " ", " ", " ", " ", " ", " ", " "}};
         Board.setBoard(testPawnOptions6);
 
-        String expected = "33 RP33 BP33 NP33 QP32rrRP32rrBP32rrNP32rrQP33 RP33 BP33 NP33 QP34nnRP34nnBP34nnNP34nnQP";
+        String expected = "32rRP32rBP32rNP32rQP34nRP34nBP34nNP34nQP33 RP33 BP33 NP33 QP";
         assertEquals("Pawn has invalid capture promotion", expected, FindMoves.possibleMoves());
     }
 

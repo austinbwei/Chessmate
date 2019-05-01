@@ -56,7 +56,7 @@ public class Bishop extends Piece {
 
                         //Add move option if king is not going to be in check
                         if (King.isKingSafe()) {
-                            moves = moves + row + column + (row + temp + j) + (column + temp * k) + takenPiece;
+                            moves = moves + row + column + (row + temp * j) + (column + temp * k) + takenPiece;
                         }
 
                         //Reset positions

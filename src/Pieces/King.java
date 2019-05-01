@@ -5,8 +5,8 @@ import Game.Board;
 public class King extends Piece {
 
     private static String[][] chessBoard;
-    private static int humanKingCoordinate;
-    private static int computerKingCoordinate;
+    public static int humanKingCoordinate;
+    public static int computerKingCoordinate;
 
     /**
      * Navigate coordinates around the piece and determine possible moves
@@ -57,21 +57,10 @@ public class King extends Piece {
         return moves;
     }
 
-
     //Ensure king is not moving into a check condition
     public static boolean isKingSafe() {
 
-        while(!chessBoard[humanKingCoordinate / 8][humanKingCoordinate % 8].equals("A")) {
-            humanKingCoordinate++;
-        }
-
-        while(!chessBoard[computerKingCoordinate / 8][computerKingCoordinate % 8].equals("A")) {
-            computerKingCoordinate++;
-        }
-
-
         int loc = 1;
-
 
         //Safe from Bishop and Queens
         for (int i = -1; i <= 1; i += 2) {
@@ -184,7 +173,9 @@ public class King extends Piece {
             }
         }
 
-
         return true;
+
+
     }
+
 }

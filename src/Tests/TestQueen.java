@@ -55,7 +55,7 @@ public class TestQueen {
                 {" ", " ", " ", " ", " ", " ", " ", " "}};
         Board.setBoard(testQueenOptions4);
 
-        String expected = "4443p4444k4445p4453p4455r4463b4464n4465b";
+        String expected = "4433p4434k4435p4443p4445r4453b4454n4455b";
         assertEquals("queen has invalid piece detection", expected, FindMoves.possibleMoves());
     }
 }

@@ -1,159 +1,88 @@
 package Pieces;
 
 import Game.Board;
+import Game.Move;
+
+import java.util.ArrayList;
 
 public class Pawn extends Piece {
 
-    private static String[][] chessBoard;
+    public Pawn(boolean color) {
+        super(color);
+        value = 0;
+    }
 
-    public static String legalMoves(int i) {
-        chessBoard = Board.getBoard();
+    public Pawn clone() {
+        return new Pawn(color);
+    }
 
-        String moves = "";
-        String takenPiece;
+    @Override
+    public ArrayList<Move> getLegalMoves(Board board, int row, int column) {
+        ArrayList<Move> possibleMoves = new ArrayList<Move>();
 
-        int row = i / 8;
-        int column = i % 8;
+        if (color == Piece.WHITE) {
 
-        for (int j = -1; j <= 1; j += 2) {
-
-            //Normal Capture
-            try {
-
-                //Check if move coordinate is occupied by enemy piece or is empty
-                if (Character.isLowerCase(chessBoard[row - 1][column + j].charAt(0)) && i >= 16) {
-
-                    //Set determined move
-                    chessBoard[row][column] = " ";
-                    takenPiece = chessBoard[row - 1][column + j];
-                    chessBoard[row - 1][column + j] = "P";
-
-                    //Add move option if king is not going to be in check
-                    if (King.isKingSafe()) {
-                        moves = moves + row + column + (row - 1) + (column + j) + takenPiece;
-                    }
-
-                    //Reset positions
-                    chessBoard[row][column] = "P";
-                    chessBoard[row - 1][column + j] = takenPiece;
-                }
-            } catch (Exception e) {
-
-            }
-
-            //Capture and Promote
-            try {
-
-                //Check if move coordinate is occupied by enemy piece or is empty
-                if (Character.isLowerCase(chessBoard[row - 1][column + j].charAt(0)) && i < 16) {
-
-                    //Array of pieces a pawn can promote to.
-                    String[] promotionOptions = {"R", "B", "N", "Q"};
-
-                    //Create list of moves after promotion
-                    for (int k = 0; k < 4; k++) {
-
-                        //Set determined move
-                        chessBoard[row][column] = " ";
-                        takenPiece = chessBoard[row - 1][column + j];
-                        chessBoard[row - 1][column + j] = promotionOptions[k];
-
-                        //Add move option if king is not going to be in check
-                        if (King.isKingSafe()) {
-                            moves = moves + column + (column + j) + takenPiece + promotionOptions[k] + "P";
-                        }
-
-                        //Reset positions
-                        chessBoard[row][column] = "P";
-                        chessBoard[row - 1][column + j] = takenPiece;
+            //Capture pieces
+            for (int i = -1; i <= 1; i += 2) {
+                if (isValidMove(row - 1, column + i)) {
+                    if (board.getTile(row - 1, column + i).isOccupied() && board.getTile(row - 1, column + i).getPiece().getColor() != color) {
+                        possibleMoves.add(new Move(row, column, row - 1, column + i));
                     }
                 }
-            } catch (Exception e) {
-
             }
-        }
 
             //Move one space
-            try {
-
-                //Check if move coordinate is empty
-                if(chessBoard[row - 1][column].equals(" ") && i >= 16) {
-
-                    //Set determined move
-                    chessBoard[row][column] = " ";
-                    takenPiece = chessBoard[row - 1][column];
-                    chessBoard[row - 1][column] = "P";
-
-                    //Add move option if king is not going to be in check
-                    if(King.isKingSafe()) {
-                        moves = moves + row + column + (row - 1) + column + takenPiece;
-                    }
-
-                    //Reset positions
-                    chessBoard[row][column] = "P";
-                    chessBoard[row - 1][column] = takenPiece;
+            if (isValidMove(row - 1, column)) {
+                if (!board.getTile(row - 1, column).isOccupied()) {
+                    possibleMoves.add(new Move(row, column, row - 1, column));
                 }
-            } catch (Exception e) {
-
             }
 
             //Move two spaces
-            try {
-
-                //Check if move coordinate is empty
-                if(chessBoard[row - 1][column].equals(" ") && chessBoard[row - 2][column].equals(" ") && i >= 48) {
-
-                    //Set determined move
-                    chessBoard[row][column] = " ";
-                    takenPiece = chessBoard[row - 2][column];
-                    chessBoard[row - 2][column] = "P";
-
-                    //Add move option if king is not going to be in check
-                    if(King.isKingSafe()) {
-                        moves = moves + row + column + (row - 2) + column + takenPiece;
-                    }
-
-                    //Reset positions
-                    chessBoard[row][column] = "P";
-                    chessBoard[row - 2][column] = takenPiece;
-                }
-            } catch (Exception e) {
-
-            }
-
-            //Normal Promote
-            try {
-
-                //Check if move coordinate is occupied by enemy piece or is empty
-                if(chessBoard[row - 1][column].equals(" ") && i < 16) {
-
-                    //Array of pieces a pawn can promote to.
-                    String[] promotionOptions = {"R", "B", "N", "Q"};
-
-                    //Create list of moves after promotion
-                    for (int k = 0; k < 4; k++) {
-
-                        //Set determined move
-                        chessBoard[row][column] = " ";
-                        takenPiece = chessBoard[row - 1][column];
-                        chessBoard[row - 1][column] = promotionOptions[k];
-
-                        //Add move option if king is not going to be in check
-                        if(King.isKingSafe()) {
-                            moves = moves + column + column + takenPiece + promotionOptions[k] + "P";
-                        }
-
-                        //Reset positions
-                        chessBoard[row][column] = "P";
-                        chessBoard[row - 1][column] = takenPiece;
+            if (row == 6) {
+                if (isValidMove(row - 2, column)) {
+                    if (!board.getTile(row - 2, column).isOccupied()) {
+                        possibleMoves.add(new Move(row, column, row - 2, column));
                     }
                 }
-            } catch (Exception e) {
-
             }
 
-        return moves;
+        } else {
 
+            //Capture pieces
+            for (int i = -1; i <= 1; i += 2) {
+                if (isValidMove(row + 1, column + i)) {
+                    if (board.getTile(row + 1, column + i).isOccupied() && board.getTile(row + 1, column + i).getPiece().getColor() != color) {
+                        possibleMoves.add(new Move(row, column, row + 1, column + i));
+                    }
+                }
+            }
+
+            //Move one space
+            if (isValidMove(row + 1, column)) {
+                if (!board.getTile(row + 1, column).isOccupied()) {
+                    possibleMoves.add(new Move(row, column, row + 1, column));
+                }
+            }
+
+            //Move two spaces
+            if (row == 1) {
+                if (isValidMove(row + 2, column)) {
+                    if (!board.getTile(row + 2, column).isOccupied()) {
+                        possibleMoves.add(new Move(row, column, row + 2, column));
+                    }
+                }
+            }
+        }
+        return possibleMoves;
+    }
+
+    public String toString() {
+        if (color == Piece.WHITE) {
+            return "P";
+        } else {
+            return "p";
+        }
     }
 
 }

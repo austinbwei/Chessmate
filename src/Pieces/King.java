@@ -1,61 +1,54 @@
 package Pieces;
 
 import Game.Board;
+import Game.Move;
+
+import java.util.ArrayList;
 
 public class King extends Piece {
 
-    private static String[][] chessBoard;
-    public static int humanKingCoordinate;
-    public static int computerKingCoordinate;
+    public King(boolean color) {
+        super(color);
+        value = 0;
+    }
 
-    /**
-     * Navigate coordinates around the piece and determine possible moves
-     * @param i Coordinate of piece to determine moves for
-     * @return Possible moves
-     */
-    public static String legalMoves(int i) {
-        chessBoard = Board.getBoard();
+    public King clone() {
+        return new King(color);
+    }
 
-        String moves = "";
-        String takenPiece;
+    public ArrayList<Move> getLegalMoves(Board board, int row, int column) {
+        ArrayList<Move> possibleMoves = new ArrayList<Move>();
 
-        int row = i/8;
-        int column = i%8;
+        for (int i = 0; i < 9; i++) {
 
-       //Navigate move coordinates around the King
-        for(int j = 0; j < 9; j++) {
+            if (i != 4) {
 
-            if(j != 4) {
-                try {
-
-                    //Check if move coordinate is occupied by enemy piece or is empty
-                    if (Character.isLowerCase(chessBoard[row - 1 + j / 3][column - 1 + j % 3].charAt(0)) || chessBoard[row - 1 + j / 3][column - 1 + j % 3].equals(" ")) {
-
-                        //Set determined move
-                        chessBoard[row][column] = " ";
-                        takenPiece = chessBoard[row - 1 + j / 3][column - 1 + j % 3];
-                        chessBoard[row - 1 + j / 3][column - 1 + j % 3] = "K";
-                        int kingTemp = humanKingCoordinate;
-                        humanKingCoordinate = i + (j / 3) * 8 + j % 3 - 9;
-
-                        //Add move option if king is not moving into check
-                        if (isKingSafe()) {
-                            moves = moves + row + column + (row - 1 + j / 3) + (column - 1 + j % 3) + takenPiece;
-                        }
-
-                        //Reset positions
-                        chessBoard[row][column] = "K";
-                        chessBoard[row - 1 + j / 3][column - 1 + j % 3] = takenPiece;
-                        humanKingCoordinate = kingTemp;
+                if (isValidMove(row - 1 + i / 3, column - 1 + i % 3)) {
+                    if (!board.getTile(row - 1 + i / 3, column - 1 + i % 3).isOccupied()) {
+                        possibleMoves.add(new Move(row, column, row - 1 + i / 3, column - 1 + i % 3));
                     }
 
-                } catch(Exception e) {
-
+                    if (board.getTile(row - 1 + i / 3, column - 1 + i % 3).isOccupied() && board.getTile(row - 1 + i / 3, column - 1 + i % 3).getPiece().getColor() != color) {
+                        possibleMoves.add(new Move(row, column, row - 1 + i / 3, column - 1 + i % 3));
+                    }
                 }
             }
         }
-        return moves;
+        return possibleMoves;
     }
+
+    public String toString() {
+        if (color == Piece.WHITE) {
+            return "K";
+        } else {
+            return "k";
+        }
+    }
+
+
+
+
+/*
 
     //Ensure king is not moving into a check condition
     public static boolean isKingSafe() {
@@ -177,5 +170,5 @@ public class King extends Piece {
 
 
     }
-
+*/
 }

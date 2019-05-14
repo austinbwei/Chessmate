@@ -1,100 +1,60 @@
 package Game;
 
-import Pieces.King;
+import java.util.ArrayList;
 
 public class AIPlayer {
+    private final int DEPTH;
+    private Board board;
+    private float alpha;
+    private float beta;
 
-    static final int DEFAULT_DEPTH = 4;
-    private static String[][] chessBoard = Board.getBoard();
+	public boolean color;
 
+	/**
+	 * AI player to make
+	 * @param board board to interact with
+	 * @param color player color for pieces controlled
+	 * @param alpha float value
+	 * @param beta float value
+	 * @param depth how deep into a minimax tree the ai goes
+	 */
+    public AIPlayer(Board board, boolean color, float alpha, float beta, int depth) {
+		this.board = board;
+		this.color = color;
+		this.alpha = alpha;
+		this.beta = beta;
+    	this.DEPTH = depth;
+	}
 
-    public static String alphaBeta(String move, int player, int alpha, int beta, int depth) {
-        String possibleMoves = FindMoves.possibleMoves();
+	/**
+	 * Determine move to make
+	 * @param alpha float value
+	 * @param beta float value
+	 * @return move that should be made
+	 */
+    public Move alphaBeta(float alpha, float beta) {
+        ArrayList<Move> possibleMoves = board.getMoves(color);
 
-        if (depth == 0 || possibleMoves.length() == 0) {
-            return move + (rating() * (player * 2 - 1));
-        }
+        int bestMove = 0;
 
-        player = 1 - player;
-
-        for (int i = 0; i < possibleMoves.length(); i += 5) {
-            Move.makeMove(possibleMoves.substring(i, i + 5));
-
-            flipBoard();
-            String returnedMoves = alphaBeta(possibleMoves.substring(i, i + 5), player, alpha, beta, depth - 1);
-            int value = Integer.valueOf(returnedMoves.substring(5));
-
-            flipBoard();
-            Move.undoMove(possibleMoves.substring(i, i + 5));
-
-            if (player == 0) {
-                if (value <= beta) {
-
-                    beta = value;
-
-                    if (depth == DEFAULT_DEPTH) {
-                        move = returnedMoves.substring(0, 5);
-                    }
-                }
-            } else {
-                if (value > alpha) {
-
-                    alpha = value;
-
-                    if (depth == DEFAULT_DEPTH) {
-                        move = returnedMoves.substring(0, 5);
-                    }
-                }
-            }
-
-            if (alpha >= beta) {
-                if (player == 0) {
-                    return move + beta;
-                } else {
-                    return move + alpha;
-                }
-            }
-        }
-
-        if (player == 0) {
-            return move + beta;
-        } else {
-            return move + alpha;
-        }
+        for (int i = 0; i < possibleMoves.size(); i++) {
+        	bestMove = i;
+		}
+        return possibleMoves.get(bestMove);
     }
 
+	/**
+	 * Make a move
+	 */
+	public void makeMove() {
+    	board.makeMove(alphaBeta(-1000000, 1000000));
+	}
+
+	/**
+	 * Rate how good a move is
+	 * @return how good a move is
+	 */
     public static int rating() {
         return 0;
     }
-
-    public static void flipBoard() {
-        chessBoard = Board.getBoard();
-        String temp;
-
-        for (int i = 0; i < 32; i++) {
-            int row = i / 8;
-            int column = i % 8;
-
-            if (Character.isUpperCase(chessBoard[row][column].charAt(0))) {
-                temp = chessBoard[row][column].toLowerCase();
-            } else {
-                temp = chessBoard[row][column].toUpperCase();
-            }
-
-            if (Character.isUpperCase(chessBoard[7 - row][7 - column].charAt(0))) {
-                chessBoard[row][column] = chessBoard[7 - row][7 - column].toLowerCase();
-            } else {
-                chessBoard[row][column] = chessBoard[7 - row][7 - column].toUpperCase();
-            }
-
-            chessBoard[7 - row][7 - column] = temp;
-
-        }
-
-        int kingTemp = King.humanKingCoordinate;
-        King.humanKingCoordinate = 63 - King.computerKingCoordinate;
-        King.computerKingCoordinate = 63 - kingTemp;
-
-    }
-
 }

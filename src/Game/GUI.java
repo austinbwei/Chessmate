@@ -3,10 +3,22 @@ package Game;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import Pieces.*;
+import java.util.ArrayList;
 
-public class GUI extends JPanel implements MouseListener, MouseMotionListener {
+public class GUI extends JPanel implements MouseListener, MouseMotionListener  {
 
-    private static String[][] chessBoard;
+	Board board;
+	String chessBoard;
+    AIPlayer ai;
+
+	public GUI (Board board, AIPlayer ai) {
+		this.board = board;
+        this.ai = ai;
+
+		chessBoard = this.board.toString();
+	}
+
     static int originMouseX;
     static int originMouseY;
     static int destMouseX;
@@ -17,7 +29,6 @@ public class GUI extends JPanel implements MouseListener, MouseMotionListener {
 
     @Override
     public void paintComponent(Graphics g) {
-        chessBoard = Board.getBoard();
         super.paintComponent(g);
         this.setBackground(Color.lightGray);
         this.addMouseListener(this);
@@ -42,7 +53,7 @@ public class GUI extends JPanel implements MouseListener, MouseMotionListener {
             int j = -1;
             int k = -1;
 
-            switch(chessBoard[i / 8][i % 8]) {
+            switch(board.getTile(i / 8,i % 8).toString()) {
                 case "P":
                     j = 5;
                     k = 0;
@@ -124,29 +135,25 @@ public class GUI extends JPanel implements MouseListener, MouseMotionListener {
             destMouseY = e.getY();
 
             if (e.getButton() == MouseEvent.BUTTON1) {
-                String move;
+                Move move;
 
-                if (destMouseY / squareHeight == 0 && originMouseY / squareHeight == 1 && chessBoard[originMouseY / squareHeight][originMouseX / squareWidth].equals("P")) {
-                    move =  "" + originMouseX / squareWidth + destMouseX / squareWidth +
-                            chessBoard[destMouseY / squareHeight][destMouseX / squareWidth] + "QP";
-                } else {
-                    move = "" + originMouseY / squareHeight + originMouseX / squareWidth + destMouseY / squareHeight + destMouseX / squareWidth +
-                            chessBoard[destMouseY/squareHeight][destMouseX / squareWidth];
+                move = new Move(originMouseY / squareHeight, originMouseX / squareWidth,
+                        destMouseY / squareHeight, destMouseX / squareWidth);
 
-                }
+                ArrayList<Move> possibleMoves = board.getMoves(Piece.WHITE);
 
-                String possibleMoves = FindMoves.possibleMoves();
+                for (int i = 0; i < possibleMoves.size(); i++) {
+                    if (possibleMoves.get(i).equals(move)) {
+                        board.makeMove(move);
+                        repaint();
+                        System.out.println(board);
 
-                if (possibleMoves.replaceAll(move, "").length() < possibleMoves.length()) {
-                    Move.makeMove(move);
-
-                    AIPlayer.flipBoard();
-                    Move.makeMove(AIPlayer.alphaBeta("", 0, -1000000, 1000000, AIPlayer.DEFAULT_DEPTH));
-                    AIPlayer.flipBoard();
-                    repaint();
+                        ai.makeMove();
+                        repaint();
+                        System.out.println(board);
+                    }
                 }
             }
-            repaint();
         }
     }
 
@@ -169,4 +176,5 @@ public class GUI extends JPanel implements MouseListener, MouseMotionListener {
     @Override
     public void mouseDragged(MouseEvent e) {
     }
+
 }

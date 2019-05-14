@@ -1,74 +1,96 @@
 package Pieces;
 
 import Game.Board;
+import Game.Move;
+
+import java.util.ArrayList;
 
 public class Bishop extends Piece {
 
-    private static String[][] chessBoard;
+    public Bishop(boolean color) {
+        super(color);
+        value = 0;
+    }
 
-    /**
-     * Navigate coordinates around the piece and determine possible moves
-     * @param i Coordinate of piece to determine moves for
-     * @return Possible moves
-     */
-    public static String legalMoves(int i) {
-        chessBoard = Board.getBoard();
+    public Bishop clone() {
+        return new Bishop(color);
+    }
 
-        String moves = "";
-        String takenPiece;
+    public ArrayList<Move> getLegalMoves(Board board, int row, int column) {
+        ArrayList<Move> possibleMoves = new ArrayList<Move>();
 
-        int row = i / 8;
-        int column = i % 8;
-
-        int temp = 1;
-
-        //Navigate move coordinates diagonal of the Bishop
-        for (int j = -1; j <= 1; j += 2) {
-            for (int k = -1; k <= 1; k += 2) {
-                try {
-
-                    //Find moves until another piece is found or out of array length
-                    while (chessBoard[row + temp * j][column + temp * k].equals(" ")) {
-
-                        //Set determined move
-                        chessBoard[row][column] = " ";
-                        takenPiece = chessBoard[row + temp * j][column + temp * k];
-                        chessBoard[row + temp * j][column + temp * k] = "B";
-
-                        //Add move option if king is not going to be in check
-                        if (King.isKingSafe()) {
-                            moves = moves + row + column + (row + temp * j) + (column + temp * k) + takenPiece;
-                        }
-
-                        //Reset positions
-                        chessBoard[row][column] = "B";
-                        chessBoard[row + temp * j][column + temp * k] = takenPiece;
-                        temp++;
+        //Northeast
+        for (int i = 1; i < 8; i++) {
+            if (isValidMove(row + i, column + i)) {
+                if (board.getTile(row + i, column + i).isOccupied()) {
+                    if (board.getTile(row + i, column + i).getPiece().color != color) {
+                        possibleMoves.add(new Move(row, column, row + i, column + i));
+                        break;
+                    } else {
+                        break;
                     }
-
-                    //Find move coordinates with an enemy piece
-                    if (Character.isLowerCase(chessBoard[row + temp * j][column + temp * k].charAt(0))) {
-
-                        //Set determined move
-                        chessBoard[row][column] = " ";
-                        takenPiece = chessBoard[row + temp * j][column + temp * k];
-                        chessBoard[row + temp * j][column + temp * k] = "B";
-
-                        //Add move option if king is not going to be in check
-                        if (King.isKingSafe()) {
-                            moves = moves + row + column + (row + temp * j) + (column + temp * k) + takenPiece;
-                        }
-
-                        //Reset positions
-                        chessBoard[row][column] = "B";
-                        chessBoard[row + temp * j][column + temp * k] = takenPiece;
-                    }
-                } catch (Exception e) {
-
+                } else {
+                    possibleMoves.add(new Move(row, column, row + i, column + i));
                 }
-                temp = 1;
             }
         }
-        return moves;
+
+        //Southeast
+        for (int i = 1; i < 8; i++) {
+            if (isValidMove(row - i, column + i)) {
+                if (board.getTile(row - i, column + i).isOccupied()) {
+                    if (board.getTile(row - i, column + i).getPiece().color != color) {
+                        possibleMoves.add(new Move(row, column, row - i, column + i));
+                        break;
+                    } else {
+                        break;
+                    }
+                } else {
+                    possibleMoves.add(new Move(row, column, row - i, column + i));
+                }
+            }
+        }
+
+        //Northwest
+        for (int i = 1; i < 8; i++) {
+            if (isValidMove(row + i, column - i)) {
+                if (board.getTile(row + i, column - i).isOccupied()) {
+                    if (board.getTile(row + i, column - i).getPiece().color != color) {
+                        possibleMoves.add(new Move(row, column, row + i, column - i));
+                        break;
+                    } else {
+                        break;
+                    }
+                } else {
+                    possibleMoves.add(new Move(row, column, row + i, column - i));
+                }
+            }
+        }
+
+        //Southwest
+        for (int i = 1; i < 8; i++) {
+            if (isValidMove(row - i, column - i)) {
+                if (board.getTile(row - i, column - i).isOccupied()) {
+                    if (board.getTile(row - i, column - i).getPiece().color != color) {
+                        possibleMoves.add(new Move(row, column, row - i, column - i));
+                        break;
+                    } else {
+                        break;
+                    }
+                } else {
+                    possibleMoves.add(new Move(row, column, row - i, column - i));
+                }
+            }
+        }
+        return possibleMoves;
     }
+
+    public String toString() {
+        if (color == Piece.WHITE) {
+            return "B";
+        } else {
+            return "b";
+        }
+    }
+
 }

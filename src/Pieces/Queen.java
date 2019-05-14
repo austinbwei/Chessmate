@@ -1,78 +1,159 @@
 package Pieces;
 
 import Game.Board;
+import Game.Move;
+
+import java.util.ArrayList;
 
 public class Queen extends Piece {
 
-    private static String[][] chessBoard;
+    public Queen(boolean color) {
+        super(color);
+        value = 0;
+    }
 
-    /**
-     * Navigate coordinates around the piece and determine possible moves
-     * @param i Coordinate of piece to determine moves for
-     * @return Possible moves
-     */
-    public static String legalMoves(int i) {
-        chessBoard = Board.getBoard();
+    public Queen clone() {
+        return new Queen(color);
+    }
 
-        String moves = "";
-        String takenPiece;
+    public ArrayList<Move> getLegalMoves(Board board, int row, int column) {
+        ArrayList<Move> possibleMoves = new ArrayList<Move>();
 
-        int row = i/8;
-        int column = i%8;
-
-        int temp = 1;
-
-        //Navigate move coordinates horizontal, vertical, and diagonal of the Queen
-        for(int j = -1; j <= 1; j++) {
-            for (int k = -1; k <= 1; k++) {
-                if(j != 0 || k != 0) {
-                    try {
-
-                        //Find moves until another piece is found or out of array length
-                        while (chessBoard[row + temp * j][column + temp * k].equals(" ")) {
-
-                            //Set determined move
-                            chessBoard[row][column] = " ";
-                            takenPiece = chessBoard[row + temp * j][column + temp * k];
-                            chessBoard[row + temp * j][column + temp * k] = "Q";
-
-                            //Add move option if king is not going to be in check
-                            if (King.isKingSafe()) {
-                                moves = moves + row + column + (row + temp * j) + (column + temp * k) + takenPiece;
-                            }
-
-                            //Reset positions
-                            chessBoard[row][column] = "Q";
-                            chessBoard[row + temp * j][column + temp * k] = takenPiece;
-                            temp++;
-                        }
-
-                        //Find move coordinates with an enemy piece
-                        if (Character.isLowerCase(chessBoard[row + temp * j][column + temp * k].charAt(0))) {
-
-                            //Set determined move
-                            chessBoard[row][column] = " ";
-                            takenPiece = chessBoard[row + temp * j][column + temp * k];
-                            chessBoard[row + temp * j][column + temp * k] = "Q";
-
-                            //Add move option if king is not going to be in check
-                            if (King.isKingSafe()) {
-                                moves = moves + row + column + (row + temp * j) + (column + temp * k) + takenPiece;
-                            }
-
-                            //Reset positions
-                            chessBoard[row][column] = "Q";
-                            chessBoard[row + temp * j][column + temp * k] = takenPiece;
-                        }
-
-
-                    } catch (Exception e) {
-
+        //Northeast
+        for (int i = 1; i < 8; i++) {
+            if (isValidMove(row + i, column + i)) {
+                if (board.getTile(row + i, column + i).isOccupied()) {
+                    if (board.getTile(row + i, column + i).getPiece().color != color) {
+                        possibleMoves.add(new Move(row, column, row + i, column + i));
+                        break;
+                    } else {
+                        break;
                     }
-                    temp = 1;
+                } else {
+                    possibleMoves.add(new Move(row, column, row + i, column + i));
                 }
             }
         }
-        return moves;
+
+        //Southeast
+        for (int i = 1; i < 8; i++) {
+            if (isValidMove(row - i, column + i)) {
+                if (board.getTile(row - i, column + i).isOccupied()) {
+                    if (board.getTile(row - i, column + i).getPiece().color != color) {
+                        possibleMoves.add(new Move(row, column, row - i, column + i));
+                        break;
+                    } else {
+                        break;
+                    }
+                } else {
+                    possibleMoves.add(new Move(row, column, row - i, column + i));
+                }
+            }
+        }
+
+        //Northwest
+        for (int i = 1; i < 8; i++) {
+            if (isValidMove(row + i, column - i)) {
+                if (board.getTile(row + i, column - i).isOccupied()) {
+                    if (board.getTile(row + i, column - i).getPiece().color != color) {
+                        possibleMoves.add(new Move(row, column, row + i, column - i));
+                        break;
+                    } else {
+                        break;
+                    }
+                } else {
+                    possibleMoves.add(new Move(row, column, row + i, column - i));
+                }
+            }
+        }
+
+        //Southwest
+        for (int i = 1; i < 8; i++) {
+            if (isValidMove(row - i, column - i)) {
+                if (board.getTile(row - i, column - i).isOccupied()) {
+                    if (board.getTile(row - i, column - i).getPiece().color != color) {
+                        possibleMoves.add(new Move(row, column, row - i, column - i));
+                        break;
+                    } else {
+                        break;
+                    }
+                } else {
+                    possibleMoves.add(new Move(row, column, row - i, column - i));
+                }
+            }
+        }
+
+        //North
+        for (int i = 1; i < 8; i++) {
+            if (isValidMove(row, column + i)) {
+                if (board.getTile(row, column + i).isOccupied()) {
+                    if (board.getTile(row, column + i).getPiece().getColor() != color) {
+                        possibleMoves.add(new Move(row, column, row, column + i));
+                        break;
+                    } else {
+                        break;
+                    }
+                } else {
+                    possibleMoves.add(new Move(row, column, row, column + i));
+                }
+            }
+        }
+
+        //South
+        for (int i = 1; i < 8; i++) {
+            if (isValidMove(row, column - i)) {
+                if (board.getTile(row, column - i).isOccupied()) {
+                    if (board.getTile(row, column - i).getPiece().getColor() != color) {
+                        possibleMoves.add(new Move(row, column, row, column - i));
+                        break;
+                    } else {
+                        break;
+                    }
+                } else {
+                    possibleMoves.add(new Move(row, column, row, column - i));
+                }
+            }
+        }
+
+        //West
+        for (int i = 1; i < 8; i++) {
+            if (isValidMove(row - i, column)) {
+                if (board.getTile(row - i, column).isOccupied()) {
+                    if (board.getTile(row - i, column).getPiece().getColor() != color) {
+                        possibleMoves.add(new Move(row, column, row - i, column));
+                        break;
+                    } else {
+                        break;
+                    }
+                } else {
+                    possibleMoves.add(new Move(row, column, row - i, column));
+                }
+            }
+        }
+
+        //West
+        for (int i = 1; i < 8; i++) {
+            if (isValidMove(row + i, column)) {
+                if (board.getTile(row + i, column).isOccupied()) {
+                    if (board.getTile(row + i, column).getPiece().getColor() != color) {
+                        possibleMoves.add(new Move(row, column, row + i, column));
+                        break;
+                    } else {
+                        break;
+                    }
+                } else {
+                    possibleMoves.add(new Move(row, column, row + i, column));
+                }
+            }
+        }
+        return possibleMoves;
+    }
+
+    public String toString() {
+        if (color == Piece.WHITE) {
+            return "Q";
+        } else {
+            return "q";
+        }
     }
 }

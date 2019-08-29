@@ -9,7 +9,7 @@ public class Queen extends Piece {
 
     public Queen(boolean color) {
         super(color);
-        value = 0;
+        value = 9;
     }
 
     public Queen clone() {
@@ -147,6 +147,10 @@ public class Queen extends Piece {
             }
         }
         return possibleMoves;
+    }
+
+    public int getValue() {
+        return value;
     }
 
     public String toString() {

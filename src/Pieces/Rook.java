@@ -9,7 +9,7 @@ public class Rook extends Piece {
 
     public Rook(boolean color) {
         super(color);
-        value = 0;
+        value = 5;
     }
 
     public Rook clone() {
@@ -83,6 +83,10 @@ public class Rook extends Piece {
             }
         }
         return possibleMoves;
+    }
+
+    public int getValue() {
+        return value;
     }
 
     public String toString() {

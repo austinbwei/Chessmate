@@ -150,6 +150,14 @@ public class Board {
 		return false;
 	}
 
+	public boolean isInCheckmate(boolean color) {
+		if(getMoves(color).size() == 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	/**
 	 * Get arraylist of moves for a player
 	 * @param color player to find moves for
@@ -282,6 +290,26 @@ public class Board {
 		}
 
 		return newTiles2;
+	}
+
+	public Board getBoardAfter(Board board, Move move) {
+		Board newBoard = new Board(board.getTiles());
+
+		newBoard.makeMove(move);
+
+		return newBoard;
+	}
+
+	public Tile[][] getTiles() {
+		Tile[][] tiles = new Tile[8][8];
+
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
+				tiles[i][j] = new Tile(this.tiles[i][j]);
+			}
+		}
+
+		return tiles;
 	}
 
 	/**

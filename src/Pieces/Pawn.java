@@ -9,7 +9,7 @@ public class Pawn extends Piece {
 
     public Pawn(boolean color) {
         super(color);
-        value = 0;
+        value = 1;
     }
 
     public Pawn clone() {
@@ -75,6 +75,10 @@ public class Pawn extends Piece {
             }
         }
         return possibleMoves;
+    }
+
+    public int getValue() {
+        return value;
     }
 
     public String toString() {

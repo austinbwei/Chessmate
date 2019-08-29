@@ -9,7 +9,7 @@ public class Bishop extends Piece {
 
     public Bishop(boolean color) {
         super(color);
-        value = 0;
+        value = 3;
     }
 
     public Bishop clone() {
@@ -83,6 +83,10 @@ public class Bishop extends Piece {
             }
         }
         return possibleMoves;
+    }
+
+    public int getValue() {
+        return value;
     }
 
     public String toString() {

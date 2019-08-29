@@ -9,7 +9,7 @@ public class Knight extends Piece {
 
     public Knight(boolean color) {
         super(color);
-        value = 0;
+        value = 3;
     }
 
     public Knight clone() {
@@ -47,6 +47,10 @@ public class Knight extends Piece {
             }
         }
         return possibleMoves;
+    }
+
+    public int getValue() {
+        return value;
     }
 
     public String toString() {

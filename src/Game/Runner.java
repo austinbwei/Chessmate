@@ -6,6 +6,9 @@ package Game;
 public class Runner {
 
     public static void main(String[] args) {
-        Game.start();
+        Game game = new Game(true, false);
+
+        game.start();
     }
+
 }

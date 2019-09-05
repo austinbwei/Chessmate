@@ -113,4 +113,8 @@ public class AIPlayer {
 		board.makeMove(decide(board, Float.NEGATIVE_INFINITY, Float.POSITIVE_INFINITY, depth));
 	}
 
+	public Move suggestMove() {
+		return decide(board, Float.NEGATIVE_INFINITY, Float.POSITIVE_INFINITY, depth);
+	}
+
 }

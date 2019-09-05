@@ -68,4 +68,32 @@ public class Move {
             return false;
         }
     }
+
+    public String toString(Board board) {
+        return "Move " + board.getTile(rowOrigin, columnOrigin).getPiece().printPiece() + " at "
+                + (intToString(columnOrigin + 1)) + (rowOrigin + 1) + " to "
+                + (intToString(columnDestination + 1)) + (rowDestination + 1);
+    }
+
+    private String intToString(int x) {
+        switch(x) {
+            case 1:
+                return "a";
+            case 2:
+                return "b";
+            case 3:
+                return "c";
+            case 4:
+                return "d";
+            case 5:
+                return "e";
+            case 6:
+                return "f";
+            case 7:
+                return "g";
+            case 8:
+                return "h";
+        }
+        return "x";
+    }
 }

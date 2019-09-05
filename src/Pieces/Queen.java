@@ -131,7 +131,7 @@ public class Queen extends Piece {
             }
         }
 
-        //West
+        //East
         for (int i = 1; i < 8; i++) {
             if (isValidMove(row + i, column)) {
                 if (board.getTile(row + i, column).isOccupied()) {
@@ -158,6 +158,14 @@ public class Queen extends Piece {
             return "Q";
         } else {
             return "q";
+        }
+    }
+
+    public String printPiece() {
+        if (color == Piece.WHITE) {
+            return "Queen";
+        } else {
+            return "queen";
         }
     }
 }

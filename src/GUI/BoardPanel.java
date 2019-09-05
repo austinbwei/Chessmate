@@ -10,35 +10,37 @@ import Game.Game;
 import Pieces.*;
 import java.util.ArrayList;
 
-public class BoardGUI extends JPanel implements MouseListener, MouseMotionListener {
-	static int originMouseX;
-	static int originMouseY;
-	static int destMouseX;
-	static int destMouseY;
+public class BoardPanel extends JPanel implements MouseListener, MouseMotionListener {
+	private static int originMouseX;
+	private static int originMouseY;
+	private static int destMouseX;
+	private static int destMouseY;
 
-	Board board;
-	String chessBoard;
-	AIPlayer ai;
-	Game game;
-	int width;
-	int height;
+	private Board board;
+	private String chessBoard;
+	private AIPlayer ai;
+	private Game game;
+	private int width;
+	private int height;
 
-	public BoardGUI(Board board, AIPlayer ai, Game game, int width, int height) {
+	public BoardPanel(Board board, AIPlayer ai, Game game) {
 		this.board = board;
 		this.ai = ai;
 		this.game = game;
-		this.width = width;
-		this.height = height;
 
 		chessBoard = this.board.toString();
-		Dimension dimension = new Dimension(width, height);
-		this.setPreferredSize(dimension);
+		Dimension size = getPreferredSize();
+		size.width = 500;
+		size.height = 500;
+		this.setPreferredSize(size);
+		this.width = (int) size.getWidth();
+		this.height = (int) size.getHeight();
 	}
 
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		this.setBackground(Color.BLACK);
+		this.setBackground(Color.WHITE);
 		this.addMouseListener(this);
 		this.addMouseMotionListener(this);
 

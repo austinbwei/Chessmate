@@ -49,4 +49,12 @@ public class King extends Piece {
         }
     }
 
+    public String printPiece() {
+        if (color == Piece.WHITE) {
+            return "King";
+        } else {
+            return "king";
+        }
+    }
+
 }

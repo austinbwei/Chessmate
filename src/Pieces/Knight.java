@@ -61,4 +61,12 @@ public class Knight extends Piece {
         }
     }
 
+    public String printPiece() {
+        if (color == Piece.WHITE) {
+            return "Knight";
+        } else {
+            return "knight";
+        }
+    }
+
 }

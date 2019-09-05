@@ -89,4 +89,12 @@ public class Pawn extends Piece {
         }
     }
 
+    public String printPiece() {
+        if (color == Piece.WHITE) {
+            return "Pawn";
+        } else {
+            return "pawn";
+        }
+    }
+
 }

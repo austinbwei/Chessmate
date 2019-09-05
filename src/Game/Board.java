@@ -330,7 +330,6 @@ public class Board {
 		if (originTile.getPiece().toString().equals("p") && move.getRowDestination() == 7) {
 			tiles[move.getRowDestination()][move.getColumnDestination()] = new Tile(new Queen(Piece.BLACK));
 		}
-		//return 0;
 	}
 
 }

@@ -96,4 +96,12 @@ public class Rook extends Piece {
             return "r";
         }
     }
+
+    public String printPiece() {
+        if (color == Piece.WHITE) {
+            return "Rook";
+        } else {
+            return "rook";
+        }
+    }
 }

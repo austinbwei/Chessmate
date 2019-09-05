@@ -7,8 +7,8 @@ import java.awt.*;
 
 public class Game {
 
-	boolean AIMoved;
-	boolean playerMoved;
+	private boolean AIMoved;
+	private boolean playerMoved;
 
 	Game(boolean AIMoved, boolean playerMoved) {
 		this.AIMoved = AIMoved;
@@ -24,23 +24,23 @@ public class Game {
 
 		AIPlayer ai = new AIPlayer(board, false,3);
 
-		JFrame jframe = new JFrame("Chess");
-		jframe.setSize(650, 600);
-		jframe.setResizable(false);
-
-		BoardGUI boardGUI = new BoardGUI(board, ai, this, 500, 500);
-		SideBarGUI sidebarGUI = new SideBarGUI(board, ai, 150, 500);
-		BottomBarGUI bottombarGUI = new BottomBarGUI(board, ai, 650, 100);
-
-		jframe.getContentPane().setLayout(new BorderLayout());
-		jframe.getContentPane().add(boardGUI, BorderLayout.WEST);
-		jframe.getContentPane().add(sidebarGUI, BorderLayout.EAST);
-		jframe.getContentPane().add(bottombarGUI, BorderLayout.SOUTH);
-
-		jframe.setVisible(true);
-		jframe.pack();
+		JFrame jframe = new MainFrame("Chess", this, board, ai);
+		jframe.setSize(700, 535);
 		jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		jframe.setLocationRelativeTo(null);
+		jframe.setResizable(false);
+		jframe.setVisible(true);
+
+//		BoardPanel boardPanel = new BoardPanel(board, ai, this, 500, 500);
+//		SideBarGUI sidebarGUI = new SideBarGUI(board, ai, 150, 500);
+//		BottomBarGUI bottombarGUI = new BottomBarGUI(board, ai, 650, 100);
+//
+//		jframe.getContentPane().setLayout(new BorderLayout());
+//		jframe.getContentPane().add(boardPanel, BorderLayout.WEST);
+//		jframe.getContentPane().add(sidebarGUI, BorderLayout.EAST);
+//		jframe.getContentPane().add(bottombarGUI, BorderLayout.SOUTH);
+//
+//		jframe.pack();
+//		jframe.setLocationRelativeTo(null);
 	}
 
 	public boolean getAIMoved() {

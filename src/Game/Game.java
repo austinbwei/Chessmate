@@ -3,7 +3,6 @@ package Game;
 import javax.swing.*;
 import AI.AIPlayer;
 import GUI.*;
-import java.awt.*;
 
 public class Game {
 
@@ -22,25 +21,13 @@ public class Game {
 		Board board = new Board();
 		System.out.println(board);
 
-		AIPlayer ai = new AIPlayer(board, false,3);
+		AIPlayer ai = new AIPlayer(board, false, 3);
 
 		JFrame jframe = new MainFrame("Chess", this, board, ai);
-		jframe.setSize(700, 535);
+		jframe.setSize(740, 570);
 		jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		jframe.setResizable(false);
 		jframe.setVisible(true);
-
-//		BoardPanel boardPanel = new BoardPanel(board, ai, this, 500, 500);
-//		SideBarGUI sidebarGUI = new SideBarGUI(board, ai, 150, 500);
-//		BottomBarGUI bottombarGUI = new BottomBarGUI(board, ai, 650, 100);
-//
-//		jframe.getContentPane().setLayout(new BorderLayout());
-//		jframe.getContentPane().add(boardPanel, BorderLayout.WEST);
-//		jframe.getContentPane().add(sidebarGUI, BorderLayout.EAST);
-//		jframe.getContentPane().add(bottombarGUI, BorderLayout.SOUTH);
-//
-//		jframe.pack();
-//		jframe.setLocationRelativeTo(null);
 	}
 
 	public boolean getAIMoved() {

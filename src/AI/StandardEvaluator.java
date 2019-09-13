@@ -21,7 +21,7 @@ public class StandardEvaluator implements BoardEvaluator {
 
 	private int check(Board board, boolean color) {
 		if (board.isInCheck(!color)) {
-			return 8;
+			return 15;
 		} else {
 			return 0;
 		}
@@ -52,7 +52,7 @@ public class StandardEvaluator implements BoardEvaluator {
 	}
 
 	private int moveOptions(Board board, boolean color) {
-		return board.getMoves(color).size() / 3;
+		return board.getMoves(color).size() / 2;
 	}
 
 }

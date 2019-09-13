@@ -13,18 +13,21 @@ public class SidePanel extends JPanel {
 	private Board board;
 	private String chessBoard;
 	private Boolean aiColor;
+	private AIPlayer ai;
 	private int width;
 	private int height;
+	private final JButton helpButton = new JButton("Request Move");
+	private final JTextArea helpField = new JTextArea();
 
 	public SidePanel(Board board, boolean aiColor) {
 		this.board = board;
 		this.aiColor = aiColor;
 
-		AIPlayer ai = new AIPlayer(board, !aiColor, 3);
+		ai = new AIPlayer(board, !aiColor, 3);
 
 		Dimension size = getPreferredSize();
 		size.width = 186;
-		size.height = 500;
+		size.height = 700;
 		this.setPreferredSize(size);
 		this.width = (int) size.getWidth();
 		this.height = (int) size.getHeight();
@@ -32,14 +35,21 @@ public class SidePanel extends JPanel {
 		setBorder(BorderFactory.createTitledBorder("Help"));
 		setBackground(Color.WHITE);
 
-		final JButton helpButton = new JButton("Request Move");
-		final JTextArea helpField = new JTextArea();
+		helpField.setEditable(false);
 
 		helpButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				helpField.setText("Processing...\n");
-				helpField.append(ai.suggestMove().toString(board));
+
+				new SwingWorker() {
+					@Override
+					protected Object doInBackground() throws Exception {
+						String recommendedMove = ai.suggestMove().toString(board);
+						helpField.append(recommendedMove);
+						return null;
+					}
+				}.execute();
 			}
 		});
 
@@ -59,8 +69,5 @@ public class SidePanel extends JPanel {
 		gbc.fill = GridBagConstraints.BOTH;
 		add(helpField, gbc);
 	}
-
-
-
 
 }

@@ -22,6 +22,7 @@ public class BoardPanel extends JPanel implements MouseListener, MouseMotionList
 	private Game game;
 	private int width;
 	private int height;
+	private Move aiMove;
 
 	public BoardPanel(Board board, AIPlayer ai, Game game) {
 		this.board = board;
@@ -123,7 +124,6 @@ public class BoardPanel extends JPanel implements MouseListener, MouseMotionList
 		if (e.getX() < 8 * squareWidth && e.getY() < 8 * squareHeight) {
 			originMouseX = e.getX();
 			originMouseY = e.getY();
-			repaint();
 		}
 	}
 
@@ -187,5 +187,4 @@ public class BoardPanel extends JPanel implements MouseListener, MouseMotionList
 	@Override
 	public void mouseDragged(MouseEvent e) {
 	}
-
 }

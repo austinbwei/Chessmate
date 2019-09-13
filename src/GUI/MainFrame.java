@@ -18,11 +18,21 @@ public class MainFrame extends JFrame {
 		this.ai = ai;
 
 		setLayout(new BorderLayout());
+		setBackground(Color.WHITE);
 		Container container = getContentPane();
 
+		ColumnLabelPanel columnLabelPanel = new ColumnLabelPanel();
+		RowLabelPanel rowLabelPanel = new RowLabelPanel();
 		BoardPanel boardPanel = new BoardPanel(board, ai, game);
 		SidePanel sidePanel = new SidePanel(board, ai.color);
-		container.add(boardPanel, BorderLayout.WEST);
+
+		JPanel gamePanel = new JPanel();
+		gamePanel.setLayout(new BorderLayout());
+		gamePanel.add(columnLabelPanel, BorderLayout.PAGE_START);
+		gamePanel.add(rowLabelPanel, BorderLayout.LINE_START);
+		gamePanel.add(boardPanel,BorderLayout.CENTER);
+
+		container.add(gamePanel, BorderLayout.WEST);
 		container.add(sidePanel, BorderLayout.EAST);
 	}
 

@@ -8,6 +8,7 @@ import Game.Board;
 import Game.Move;
 import Game.Game;
 import Pieces.*;
+
 import java.util.ArrayList;
 
 public class BoardPanel extends JPanel implements MouseListener, MouseMotionListener {
@@ -45,8 +46,8 @@ public class BoardPanel extends JPanel implements MouseListener, MouseMotionList
 		this.addMouseListener(this);
 		this.addMouseMotionListener(this);
 
-		int squareWidth = width/8;
-		int squareHeight = height/8;
+		int squareWidth = width / 8;
+		int squareHeight = height / 8;
 
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
@@ -63,53 +64,53 @@ public class BoardPanel extends JPanel implements MouseListener, MouseMotionList
 		Image chessPiece;
 
 		for (int i = 0; i < 64; i++) {
-			switch(board.getTile(i / 8,i % 8).toString()) {
+			switch (board.getTile(i / 8, i % 8).toString()) {
 				case "P":
-					chessPiece = new ImageIcon("images/wPawn.png").getImage();
+					chessPiece = new ImageIcon("images/pieces/wPawn.png").getImage();
 					g.drawImage(chessPiece, (i % 8) * squareWidth, (i / 8) * squareHeight, squareWidth, squareHeight, this);
 					break;
 				case "p":
-					chessPiece = new ImageIcon("images/bPawn.png").getImage();
+					chessPiece = new ImageIcon("images/pieces/bPawn.png").getImage();
 					g.drawImage(chessPiece, (i % 8) * squareWidth, (i / 8) * squareHeight, squareWidth, squareHeight, this);
 					break;
 				case "R":
-					chessPiece = new ImageIcon("images/wRook.png").getImage();
+					chessPiece = new ImageIcon("images/pieces/wRook.png").getImage();
 					g.drawImage(chessPiece, (i % 8) * squareWidth, (i / 8) * squareHeight, squareWidth, squareHeight, this);
 					break;
 				case "r":
-					chessPiece = new ImageIcon("images/bRook.png").getImage();
+					chessPiece = new ImageIcon("images/pieces/bRook.png").getImage();
 					g.drawImage(chessPiece, (i % 8) * squareWidth, (i / 8) * squareHeight, squareWidth, squareHeight, this);
 					break;
 				case "N":
-					chessPiece = new ImageIcon("images/wKnight.png").getImage();
+					chessPiece = new ImageIcon("images/pieces/wKnight.png").getImage();
 					g.drawImage(chessPiece, (i % 8) * squareWidth, (i / 8) * squareHeight, squareWidth, squareHeight, this);
 					break;
 				case "n":
-					chessPiece = new ImageIcon("images/bKnight.png").getImage();
+					chessPiece = new ImageIcon("images/pieces/bKnight.png").getImage();
 					g.drawImage(chessPiece, (i % 8) * squareWidth, (i / 8) * squareHeight, squareWidth, squareHeight, this);
 					break;
 				case "B":
-					chessPiece = new ImageIcon("images/wBishop.png").getImage();
+					chessPiece = new ImageIcon("images/pieces/wBishop.png").getImage();
 					g.drawImage(chessPiece, (i % 8) * squareWidth, (i / 8) * squareHeight, squareWidth, squareHeight, this);
 					break;
 				case "b":
-					chessPiece = new ImageIcon("images/bBishop.png").getImage();
+					chessPiece = new ImageIcon("images/pieces/bBishop.png").getImage();
 					g.drawImage(chessPiece, (i % 8) * squareWidth, (i / 8) * squareHeight, squareWidth, squareHeight, this);
 					break;
 				case "Q":
-					chessPiece = new ImageIcon("images/wQueen.png").getImage();
+					chessPiece = new ImageIcon("images/pieces/wQueen.png").getImage();
 					g.drawImage(chessPiece, (i % 8) * squareWidth, (i / 8) * squareHeight, squareWidth, squareHeight, this);
 					break;
 				case "q":
-					chessPiece = new ImageIcon("images/bQueen.png").getImage();
+					chessPiece = new ImageIcon("images/pieces/bQueen.png").getImage();
 					g.drawImage(chessPiece, (i % 8) * squareWidth, (i / 8) * squareHeight, squareWidth, squareHeight, this);
 					break;
 				case "K":
-					chessPiece = new ImageIcon("images/wKing.png").getImage();
+					chessPiece = new ImageIcon("images/pieces/wKing.png").getImage();
 					g.drawImage(chessPiece, (i % 8) * squareWidth, (i / 8) * squareHeight, squareWidth, squareHeight, this);
 					break;
 				case "k":
-					chessPiece = new ImageIcon("images/bKing.png").getImage();
+					chessPiece = new ImageIcon("images/pieces/bKing.png").getImage();
 					g.drawImage(chessPiece, (i % 8) * squareWidth, (i / 8) * squareHeight, squareWidth, squareHeight, this);
 					break;
 			}
@@ -118,8 +119,8 @@ public class BoardPanel extends JPanel implements MouseListener, MouseMotionList
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		int squareWidth = width/8;
-		int squareHeight = height/8;
+		int squareWidth = width / 8;
+		int squareHeight = height / 8;
 
 		if (e.getX() < 8 * squareWidth && e.getY() < 8 * squareHeight) {
 			originMouseX = e.getX();
@@ -129,8 +130,8 @@ public class BoardPanel extends JPanel implements MouseListener, MouseMotionList
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		int squareWidth = width/8;
-		int squareHeight = height/8;
+		int squareWidth = width / 8;
+		int squareHeight = height / 8;
 
 		if (e.getX() < 8 * squareWidth && e.getY() < 8 * squareHeight) {
 			destMouseX = e.getX();
@@ -156,17 +157,17 @@ public class BoardPanel extends JPanel implements MouseListener, MouseMotionList
 					}
 				}
 			}
-		}
 
-		if (game.getPlayerMoved()) {
-			repaint();
-			ai.makeMove();
-			game.setPlayerMovedMoved(false);
-			game.setAIMoved(true);
-			System.out.println(board);
+			if (game.getPlayerMoved()) {
+				repaint();
+				ai.makeMove();
+				game.setPlayerMovedMoved(false);
+				game.setAIMoved(true);
+				System.out.println(board);
+			}
 		}
-
 	}
+
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
@@ -187,4 +188,5 @@ public class BoardPanel extends JPanel implements MouseListener, MouseMotionList
 	@Override
 	public void mouseDragged(MouseEvent e) {
 	}
+
 }

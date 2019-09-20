@@ -21,7 +21,7 @@ public class Game {
 		Board board = new Board();
 		System.out.println(board);
 
-		AIPlayer ai = new AIPlayer(board, false, 3);
+		AIPlayer ai = new AIPlayer(board, false, 2);
 
 		JFrame jframe = new MainFrame("Chess", this, board, ai);
 		jframe.setSize(740, 570);

@@ -13,7 +13,7 @@ public class SidePanel extends JPanel {
 	private Board board;
 	private String chessBoard;
 	private Boolean aiColor;
-	private AIPlayer ai;
+	private AIPlayer aiHelper;
 	private int width;
 	private int height;
 	private final JButton helpButton = new JButton("Request Move");
@@ -23,7 +23,7 @@ public class SidePanel extends JPanel {
 		this.board = board;
 		this.aiColor = aiColor;
 
-		ai = new AIPlayer(board, !aiColor, 3);
+		aiHelper = new AIPlayer(board, !aiColor, 3);
 
 		Dimension size = getPreferredSize();
 		size.width = 186;
@@ -45,8 +45,8 @@ public class SidePanel extends JPanel {
 				new SwingWorker() {
 					@Override
 					protected Object doInBackground() throws Exception {
-						String recommendedMove = ai.suggestMove().toString(board);
-						helpField.append(recommendedMove);
+						String recommendedMove = aiHelper.suggestMove().toString(board);
+						helpField.setText(recommendedMove);
 						return null;
 					}
 				}.execute();

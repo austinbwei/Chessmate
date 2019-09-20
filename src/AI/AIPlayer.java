@@ -106,6 +106,14 @@ public class AIPlayer {
     	return (int) alpha;
 	}
 
+	public void setDepth(int depth) {
+    	this.depth = depth;
+	}
+
+	public int getDepth() {
+    	return depth;
+	}
+
 	/**
 	 * Make a move
 	 */

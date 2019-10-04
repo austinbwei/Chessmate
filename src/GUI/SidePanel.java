@@ -7,7 +7,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-
 public class SidePanel extends JPanel {
 
 	private Board board;
@@ -17,7 +16,7 @@ public class SidePanel extends JPanel {
 	private int width;
 	private int height;
 	private final JButton helpButton = new JButton("Request Move");
-	private final JTextArea helpField = new JTextArea();
+	private JTextArea helpField = new JTextArea();
 
 	public SidePanel(Board board, boolean aiColor) {
 		this.board = board;

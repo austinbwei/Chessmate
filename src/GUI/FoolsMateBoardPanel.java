@@ -3,33 +3,25 @@ package GUI;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import AI.AIPlayer;
 import Game.Board;
 import Game.Move;
-import Game.Game;
-import Pieces.*;
-import java.util.ArrayList;
 
-public class BoardPanel extends JPanel implements MouseListener {
+public class FoolsMateBoardPanel extends JPanel implements MouseListener {
 	private static int originMouseX;
 	private static int originMouseY;
 	private static int destMouseX;
 	private static int destMouseY;
 
+	private FoolsMateInstPanel instructor;
 	private Board board;
-	private AIPlayer ai;
-	private Game game;
 	private int width;
 	private int height;
+	private boolean myTurn;
+	private boolean turn2;
 	private int squareWidth;
 	private int squareHeight;
-	private Move aiMove;
 
-	public BoardPanel(Board board, AIPlayer ai, Game game) {
-		this.board = board;
-		this.ai = ai;
-		this.game = game;
-
+	public FoolsMateBoardPanel(FoolsMateInstPanel instructor) {
 		Dimension size = getPreferredSize();
 		size.width = 500;
 		size.height = 500;
@@ -38,6 +30,14 @@ public class BoardPanel extends JPanel implements MouseListener {
 		this.height = (int) size.getHeight();
 		this.squareWidth = width / 8;
 		this.squareHeight = height / 8;
+
+		this.instructor = instructor;
+		board = new Board();
+
+		turn2 = false;
+		whiteMove1();
+		myTurn = true;
+
 		this.addMouseListener(this);
 	}
 
@@ -129,34 +129,47 @@ public class BoardPanel extends JPanel implements MouseListener {
 			destMouseY = e.getY();
 
 			if (e.getButton() == MouseEvent.BUTTON1) {
-				Move move;
-
-				move = new Move(originMouseY / squareHeight, originMouseX / squareWidth,
+				Move move = new Move(originMouseY / squareHeight, originMouseX / squareWidth,
 						destMouseY / squareHeight, destMouseX / squareWidth);
 
-				ArrayList<Move> possibleMoves = board.getMoves(Piece.WHITE);
+				Move bMove1 = new Move(1, 4, 2, 4);
+				Move bMove2 = new Move(0, 3, 4, 7);
+				Move wMove2 = new Move(6, 6, 4, 6);
 
-				for (int i = 0; i < possibleMoves.size(); i++) {
-					if (possibleMoves.get(i).equals(move)) {
-						if (game.getAIMoved()) {
-							board.makeMove(move);
+				if (!turn2) {
+					if (bMove1.equals(move)) {
+						if (myTurn) {
+							board.makeMove(bMove1);
+							revalidate();
 							repaint();
-							game.setAIMoved(false);
-							game.setPlayerMovedMoved(true);
-							System.out.println(board);
+							myTurn = false;
+							board.makeMove(wMove2);
+							revalidate();
+							repaint();
+							myTurn = true;
+							turn2 = true;
+							instructor.printInstructions2();
+						}
+					}
+				} else {
+					if (bMove2.equals(move)) {
+						if (myTurn) {
+							board.makeMove(bMove2);
+							revalidate();
+							repaint();
+							myTurn = false;
+							instructor.printfinalInstructions();
 						}
 					}
 				}
 			}
-
-			if (game.getPlayerMoved()) {
-				repaint();
-				ai.makeMove();
-				game.setPlayerMovedMoved(false);
-				game.setAIMoved(true);
-				System.out.println(board);
-			}
 		}
+	}
+
+	private void whiteMove1() {
+		Move move = new Move(6, 5, 4, 5);
+		board.makeMove(move);
+		instructor.printInstructions1();
 	}
 
 	@Override

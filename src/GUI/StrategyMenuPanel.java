@@ -5,18 +5,15 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MainMenuPanel extends JPanel {
+public class StrategyMenuPanel extends JPanel {
 
-	private MainFrame mainFrame;
 	private int width;
 	private int height;
 	private JTextPane title;
-	private JButton startGame;
-	private JButton learnStrats;
+	private JButton foolsMate;
+	private MainFrame mainFrame;
 
-	public MainMenuPanel(MainFrame mainFrame) {
-		this.mainFrame = mainFrame;
-
+	public StrategyMenuPanel(MainFrame mainFrame) {
 		Dimension size = getPreferredSize();
 		size.width = 740;
 		size.height = 570;
@@ -24,26 +21,20 @@ public class MainMenuPanel extends JPanel {
 		this.width = (int) size.getWidth();
 		this.height = (int) size.getHeight();
 		title = new JTextPane();
-		startGame = new JButton("Start Game");
-		learnStrats = new JButton("Learn Strategies");
+		foolsMate = new JButton("Fool's Mate");
 		setBackground(Color.WHITE);
 
-		title.setText("Chess");
+		title.setText("Strategies");
 		Font font = new Font(Font.SANS_SERIF, 2, 30);
 		title.setFont(font);
 		title.setEditable(false);
 
-		startGame.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				mainFrame.startPreliminaryAssessment();
-			}
-		});
+		this.mainFrame = mainFrame;
 
-		learnStrats.addActionListener(new ActionListener() {
+		foolsMate.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				mainFrame.startStrategy();
+				mainFrame.startFoolsMateInstructions();
 			}
 		});
 
@@ -56,11 +47,7 @@ public class MainMenuPanel extends JPanel {
 
 		gbc.gridx = 0;
 		gbc.gridy = 1;
-		add(startGame, gbc);
-
-		gbc.gridx = 0;
-		gbc.gridy = 2;
-		add(learnStrats, gbc);
+		add(foolsMate, gbc);
 	}
 
 }

@@ -18,6 +18,8 @@ public class MainFrame extends JFrame {
 	private ColumnLabelPanel columnLabelPanel;
 	private RowLabelPanel rowLabelPanel;
 	private AssessmentPanel assessmentPanel;
+	private StrategyMenuPanel strategyMenuPanel;
+	private FoolsMateInstPanel foolsMateInstPanel;
 	private JPanel gamePanel;
 
 	public MainFrame (String title, Game game, Board board, AIPlayer ai) {
@@ -32,6 +34,8 @@ public class MainFrame extends JFrame {
 		columnLabelPanel = new ColumnLabelPanel();
 		rowLabelPanel = new RowLabelPanel();
 		assessmentPanel = new AssessmentPanel(this, ai);
+		strategyMenuPanel = new StrategyMenuPanel(this);
+		foolsMateInstPanel = new FoolsMateInstPanel(this);
 
 		gamePanel = new JPanel();
 		gamePanel.setLayout(new BorderLayout());
@@ -45,16 +49,18 @@ public class MainFrame extends JFrame {
 		startMainMenu();
 	}
 
-	private void startMainMenu() {
+	public void startMainMenu() {
 		container.removeAll();
 		container.add(mainMenuPanel);
 		setVisible(true);
+		repaint();
 	}
 
 	public void startPreliminaryAssessment() {
 		container.removeAll();
 		container.add(assessmentPanel);
 		setVisible(true);
+		repaint();
 	}
 
 	public void startNormalGame() {
@@ -62,6 +68,20 @@ public class MainFrame extends JFrame {
 		container.add(gamePanel, BorderLayout.WEST);
 		container.add(sidePanel, BorderLayout.EAST);
 		setVisible(true);
+		repaint();
 	}
 
+	public void startStrategy() {
+		container.removeAll();
+		container.add(strategyMenuPanel);
+		setVisible(true);
+		repaint();
+	}
+
+	public void startFoolsMateInstructions() {
+		container.removeAll();
+		container.add(foolsMateInstPanel);
+		setVisible(true);
+		repaint();
+	}
 }

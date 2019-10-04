@@ -17,23 +17,23 @@ public class AssessmentPanel extends JPanel {
 	private Question[] questionBank;
 	private JLabel boardImage = new JLabel(new ImageIcon());
 
-	private final ImageIcon q1Image = new ImageIcon("images/boards/question1.png");
+	private final ImageIcon q1Image = new ImageIcon("images/questionImages/question1.png");
 	private final String[] q1Origins = {"d2", "d2"};
 	private final String[] q1Destinations = {"d1", "a2"};
 
-	private final ImageIcon q2Image = new ImageIcon("images/boards/question2.png");
+	private final ImageIcon q2Image = new ImageIcon("images/questionImages/question2.png");
 	private final String[] q2Origins = {"c7"};
 	private final String[] q2Destinations = {"c5"};
 
-	private final ImageIcon q3Image = new ImageIcon("images/boards/question3.png");
+	private final ImageIcon q3Image = new ImageIcon("images/questionImages/question3.png");
 	private final String[] q3Origins = {"h6"};
 	private final String[] q3Destinations = {"f7"};
 
-	private final ImageIcon q4Image = new ImageIcon("images/boards/question4.png");
+	private final ImageIcon q4Image = new ImageIcon("images/questionImages/question4.png");
 	private final String[] q4Origins = {"g7"};
 	private final String[] q4Destinations = {"f8"};
 
-	private final ImageIcon q5Image = new ImageIcon("images/boards/question5.png");
+	private final ImageIcon q5Image = new ImageIcon("images/questionImages/question5.png");
 	private final String[] q5Origins = {"g8"};
 	private final String[] q5Destinations = {"g1"};
 
@@ -92,7 +92,6 @@ public class AssessmentPanel extends JPanel {
 		} else {
 			aiPlayer.setDepth(1);
 		}
-		System.out.println(aiPlayer.getDepth());
 		mainFrame.startNormalGame();
 	}
 
@@ -109,7 +108,6 @@ public class AssessmentPanel extends JPanel {
 		for (int i = 0; i < correctOrigin.length; i++) {
 			if (correctOrigin[i].equalsIgnoreCase(origin) && correctDestination[i].equalsIgnoreCase(destination)) {
 				score++;
-				System.out.println("correct " + score);
 			}
 		}
 		nextQuestion();

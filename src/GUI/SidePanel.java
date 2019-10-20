@@ -9,6 +9,8 @@ import java.awt.event.ActionListener;
 
 public class SidePanel extends JPanel {
 
+	private BoardPanel boardPanel;
+	private MainFrame mainFrame;
 	private Board board;
 	private String chessBoard;
 	private Boolean aiColor;
@@ -17,8 +19,11 @@ public class SidePanel extends JPanel {
 	private int height;
 	private final JButton helpButton = new JButton("Request Move");
 	private JTextArea helpField = new JTextArea();
+	private JTextArea updateField = new JTextArea();
+	private final JButton menuButton = new JButton("Main Menu");
 
-	public SidePanel(Board board, boolean aiColor) {
+	public SidePanel(MainFrame mainFrame, Board board, boolean aiColor) {
+		this.mainFrame = mainFrame;
 		this.board = board;
 		this.aiColor = aiColor;
 
@@ -31,10 +36,11 @@ public class SidePanel extends JPanel {
 		this.width = (int) size.getWidth();
 		this.height = (int) size.getHeight();
 
-		setBorder(BorderFactory.createTitledBorder("Help"));
+		setBorder(BorderFactory.createTitledBorder("Menu"));
 		setBackground(Color.WHITE);
 
 		helpField.setEditable(false);
+		updateField.setEditable(false);
 
 		helpButton.addActionListener(new ActionListener() {
 			@Override
@@ -52,21 +58,52 @@ public class SidePanel extends JPanel {
 			}
 		});
 
+		menuButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mainFrame.startMainMenu();
+			}
+		});
+
 		setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
 
-		gbc.anchor = GridBagConstraints.PAGE_END;
 		gbc.weightx = 0.5;
-		gbc.weighty = 0.5;
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		add(helpButton, gbc);
 
 		gbc.gridx = 0;
 		gbc.gridy = 1;
-		gbc.anchor = GridBagConstraints.FIRST_LINE_START;
-		gbc.fill = GridBagConstraints.BOTH;
 		add(helpField, gbc);
+
+		gbc.gridx = 0;
+		gbc.gridy = 2;
+		add(updateField, gbc);
+
+		gbc.gridx = 0;
+		gbc.gridy = 3;
+		add(menuButton, gbc);
+	}
+
+	public void addCheckIndicator(boolean color) {
+		if (color) {
+			updateField.setText("White in check!");
+		} else {
+			updateField.setText("Black in check!");
+		}
+	}
+
+	public void addCheckmateIndicator(boolean color) {
+		if (color) {
+			updateField.setText("White is checkmated! \nPress the main menu button.");
+		} else {
+			updateField.setText("Black is checkmated! \nPress the main menu button.");
+		}
+	}
+
+	public void resetField() {
+		updateField.setText(" ");
 	}
 
 }

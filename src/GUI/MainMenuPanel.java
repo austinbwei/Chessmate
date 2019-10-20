@@ -10,9 +10,11 @@ public class MainMenuPanel extends JPanel {
 	private MainFrame mainFrame;
 	private int width;
 	private int height;
+	private GridBagConstraints gbc;
 	private JTextPane title;
 	private JButton startGame;
 	private JButton learnStrats;
+	private JButton phaseSuggestion;
 
 	public MainMenuPanel(MainFrame mainFrame) {
 		this.mainFrame = mainFrame;
@@ -26,6 +28,7 @@ public class MainMenuPanel extends JPanel {
 		title = new JTextPane();
 		startGame = new JButton("Start Game");
 		learnStrats = new JButton("Learn Strategies");
+		phaseSuggestion = new JButton("Phase Suggestion");
 		setBackground(Color.WHITE);
 
 		title.setText("Chess");
@@ -36,7 +39,8 @@ public class MainMenuPanel extends JPanel {
 		startGame.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				mainFrame.startPreliminaryAssessment();
+				//mainFrame.startPreliminaryAssessment();
+				mainFrame.startGame();
 			}
 		});
 
@@ -48,7 +52,7 @@ public class MainMenuPanel extends JPanel {
 		});
 
 		setLayout(new GridBagLayout());
-		GridBagConstraints gbc = new GridBagConstraints();
+		gbc = new GridBagConstraints();
 
 		gbc.gridx = 0;
 		gbc.gridy = 0;
@@ -61,6 +65,24 @@ public class MainMenuPanel extends JPanel {
 		gbc.gridx = 0;
 		gbc.gridy = 2;
 		add(learnStrats, gbc);
+
+	}
+
+	public void addPhaseSuggestion(int phase) {
+		System.out.println("Called");
+
+		phaseSuggestion.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mainFrame.startPhasedGame(phase);
+			}
+		});
+
+		gbc.gridx = 0;
+		gbc.gridy = 3;
+		add(phaseSuggestion, gbc);
+		repaint();
+
 	}
 
 }

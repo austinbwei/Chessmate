@@ -19,16 +19,20 @@ public class BoardPanel extends JPanel implements MouseListener {
 	private Board board;
 	private AIPlayer ai;
 	private Game game;
+	private SidePanel sidePanel;
 	private int width;
 	private int height;
 	private int squareWidth;
 	private int squareHeight;
 	private Move aiMove;
+	private int turn;
+	private boolean normalGame;
 
-	public BoardPanel(Board board, AIPlayer ai, Game game) {
+	public BoardPanel(Board board, AIPlayer ai, Game game, SidePanel sidePanel, boolean normalGame) {
 		this.board = board;
 		this.ai = ai;
 		this.game = game;
+		this.sidePanel = sidePanel;
 
 		Dimension size = getPreferredSize();
 		size.width = 500;
@@ -39,6 +43,8 @@ public class BoardPanel extends JPanel implements MouseListener {
 		this.squareWidth = width / 8;
 		this.squareHeight = height / 8;
 		this.addMouseListener(this);
+		turn = 0;
+		this.normalGame = normalGame;
 	}
 
 	@Override
@@ -136,25 +142,47 @@ public class BoardPanel extends JPanel implements MouseListener {
 
 				ArrayList<Move> possibleMoves = board.getMoves(Piece.WHITE);
 
-				for (int i = 0; i < possibleMoves.size(); i++) {
-					if (possibleMoves.get(i).equals(move)) {
-						if (game.getAIMoved()) {
-							board.makeMove(move);
-							repaint();
-							game.setAIMoved(false);
-							game.setPlayerMovedMoved(true);
-							System.out.println(board);
+					for (int i = 0; i < possibleMoves.size(); i++) {
+						if (possibleMoves.get(i).equals(move)) {
+							if (game.getAIMoved()) {
+								board.makeMove(move);
+								repaint();
+								turn++;
+								sidePanelCommunicator();
+
+								if (board.isInCheckmate(false)) {
+									game.setAIMoved(true);
+									game.setPlayerMovedMoved(true);
+									if (normalGame) {
+										game.addPhaseSuggestion(turn);
+									}
+									System.out.println(board);
+								} else {
+									game.setAIMoved(false);
+									game.setPlayerMovedMoved(true);
+									System.out.println(board);
+								}
+							}
 						}
 					}
-				}
-			}
 
-			if (game.getPlayerMoved()) {
-				repaint();
-				ai.makeMove();
-				game.setPlayerMovedMoved(false);
-				game.setAIMoved(true);
-				System.out.println(board);
+				if (game.getPlayerMoved() && !board.isInCheckmate(false)) {
+					ai.makeMove();
+					repaint();
+					turn++;
+					sidePanelCommunicator();
+					game.setPlayerMovedMoved(false);
+					game.setAIMoved(true);
+					System.out.println(board);
+				} else if (board.isInCheckmate(false)) {
+					sidePanelCommunicator();
+					if (normalGame) {
+						game.addPhaseSuggestion(turn);
+					}
+					game.setPlayerMovedMoved(true);
+					game.setAIMoved(false);
+					System.out.println(board);
+				}
 			}
 		}
 	}
@@ -169,6 +197,24 @@ public class BoardPanel extends JPanel implements MouseListener {
 
 	@Override
 	public void mouseExited(MouseEvent e) {
+	}
+
+	private void sidePanelCommunicator() {
+		if (board.isInCheckmate(true)) {
+			System.out.println("Checkmate!");
+			sidePanel.addCheckmateIndicator(true);
+		} else if (board.isInCheckmate(false)) {
+			System.out.println("Checkmate!");
+			sidePanel.addCheckmateIndicator(false);
+		} else if (board.isInCheck(true)) {
+			System.out.println("Check!");
+			sidePanel.addCheckIndicator(true);
+		} else if (board.isInCheck(false)) {
+			System.out.println("Check!");
+			sidePanel.addCheckIndicator(false);
+		} else {
+			sidePanel.resetField();
+		}
 	}
 
 }

@@ -2,6 +2,9 @@ package GUI;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import AI.AIPlayer;
 import Game.Board;
@@ -28,6 +31,19 @@ public class BoardPanel extends JPanel implements MouseListener {
 	private int turn;
 	private boolean normalGame;
 
+	private Image wPawn = null;
+	private Image bPawn = null;
+	private Image wRook = null;
+	private Image bRook = null;
+	private Image wKnight = null;
+	private Image bKnight = null;
+	private Image wBishop = null;
+	private Image bBishop = null;
+	private Image wQueen = null;
+	private Image bQueen = null;
+	private Image wKing = null;
+	private Image bKing = null;
+
 	public BoardPanel(Board board, AIPlayer ai, Game game, SidePanel sidePanel, boolean normalGame) {
 		this.board = board;
 		this.ai = ai;
@@ -43,6 +59,24 @@ public class BoardPanel extends JPanel implements MouseListener {
 		this.squareWidth = width / 8;
 		this.squareHeight = height / 8;
 		this.addMouseListener(this);
+
+		try {
+			wPawn = ImageIO.read(ResourceLoader.load("images/pieces/wPawn.png"));
+			bPawn = ImageIO.read(ResourceLoader.load("images/pieces/bPawn.png"));
+			wRook = ImageIO.read(ResourceLoader.load("images/pieces/wRook.png"));
+			bRook = ImageIO.read(ResourceLoader.load("images/pieces/bRook.png"));
+			wKnight = ImageIO.read(ResourceLoader.load("images/pieces/wKnight.png"));
+			bKnight = ImageIO.read(ResourceLoader.load("images/pieces/bKnight.png"));
+			wBishop = ImageIO.read(ResourceLoader.load("images/pieces/wBishop.png"));
+			bBishop = ImageIO.read(ResourceLoader.load("images/pieces/bBishop.png"));
+			wQueen = ImageIO.read(ResourceLoader.load("images/pieces/wQueen.png"));
+			bQueen = ImageIO.read(ResourceLoader.load("images/pieces/bQueen.png"));
+			wKing = ImageIO.read(ResourceLoader.load("images/pieces/wKing.png"));
+			bKing = ImageIO.read(ResourceLoader.load("images/pieces/bKing.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		};
+
 		turn = 0;
 		this.normalGame = normalGame;
 	}
@@ -64,57 +98,43 @@ public class BoardPanel extends JPanel implements MouseListener {
 			}
 		}
 
-		Image chessPiece;
-
 		for (int i = 0; i < 64; i++) {
 			switch (board.getTile(i / 8, i % 8).toString()) {
 				case "P":
-					chessPiece = new ImageIcon("images/pieces/wPawn.png").getImage();
-					g.drawImage(chessPiece, (i % 8) * squareWidth, (i / 8) * squareHeight, squareWidth, squareHeight, this);
+					g.drawImage(wPawn, (i % 8) * squareWidth, (i / 8) * squareHeight, squareWidth, squareHeight, this);
 					break;
 				case "p":
-					chessPiece = new ImageIcon("images/pieces/bPawn.png").getImage();
-					g.drawImage(chessPiece, (i % 8) * squareWidth, (i / 8) * squareHeight, squareWidth, squareHeight, this);
+					g.drawImage(bPawn, (i % 8) * squareWidth, (i / 8) * squareHeight, squareWidth, squareHeight, this);
 					break;
 				case "R":
-					chessPiece = new ImageIcon("images/pieces/wRook.png").getImage();
-					g.drawImage(chessPiece, (i % 8) * squareWidth, (i / 8) * squareHeight, squareWidth, squareHeight, this);
+					g.drawImage(wRook, (i % 8) * squareWidth, (i / 8) * squareHeight, squareWidth, squareHeight, this);
 					break;
 				case "r":
-					chessPiece = new ImageIcon("images/pieces/bRook.png").getImage();
-					g.drawImage(chessPiece, (i % 8) * squareWidth, (i / 8) * squareHeight, squareWidth, squareHeight, this);
+					g.drawImage(bRook, (i % 8) * squareWidth, (i / 8) * squareHeight, squareWidth, squareHeight, this);
 					break;
 				case "N":
-					chessPiece = new ImageIcon("images/pieces/wKnight.png").getImage();
-					g.drawImage(chessPiece, (i % 8) * squareWidth, (i / 8) * squareHeight, squareWidth, squareHeight, this);
+					g.drawImage(wKnight, (i % 8) * squareWidth, (i / 8) * squareHeight, squareWidth, squareHeight, this);
 					break;
 				case "n":
-					chessPiece = new ImageIcon("images/pieces/bKnight.png").getImage();
-					g.drawImage(chessPiece, (i % 8) * squareWidth, (i / 8) * squareHeight, squareWidth, squareHeight, this);
+					g.drawImage(bKnight, (i % 8) * squareWidth, (i / 8) * squareHeight, squareWidth, squareHeight, this);
 					break;
 				case "B":
-					chessPiece = new ImageIcon("images/pieces/wBishop.png").getImage();
-					g.drawImage(chessPiece, (i % 8) * squareWidth, (i / 8) * squareHeight, squareWidth, squareHeight, this);
+					g.drawImage(wBishop, (i % 8) * squareWidth, (i / 8) * squareHeight, squareWidth, squareHeight, this);
 					break;
 				case "b":
-					chessPiece = new ImageIcon("images/pieces/bBishop.png").getImage();
-					g.drawImage(chessPiece, (i % 8) * squareWidth, (i / 8) * squareHeight, squareWidth, squareHeight, this);
+					g.drawImage(bBishop, (i % 8) * squareWidth, (i / 8) * squareHeight, squareWidth, squareHeight, this);
 					break;
 				case "Q":
-					chessPiece = new ImageIcon("images/pieces/wQueen.png").getImage();
-					g.drawImage(chessPiece, (i % 8) * squareWidth, (i / 8) * squareHeight, squareWidth, squareHeight, this);
+					g.drawImage(wQueen, (i % 8) * squareWidth, (i / 8) * squareHeight, squareWidth, squareHeight, this);
 					break;
 				case "q":
-					chessPiece = new ImageIcon("images/pieces/bQueen.png").getImage();
-					g.drawImage(chessPiece, (i % 8) * squareWidth, (i / 8) * squareHeight, squareWidth, squareHeight, this);
+					g.drawImage(bQueen, (i % 8) * squareWidth, (i / 8) * squareHeight, squareWidth, squareHeight, this);
 					break;
 				case "K":
-					chessPiece = new ImageIcon("images/pieces/wKing.png").getImage();
-					g.drawImage(chessPiece, (i % 8) * squareWidth, (i / 8) * squareHeight, squareWidth, squareHeight, this);
+					g.drawImage(wKing, (i % 8) * squareWidth, (i / 8) * squareHeight, squareWidth, squareHeight, this);
 					break;
 				case "k":
-					chessPiece = new ImageIcon("images/pieces/bKing.png").getImage();
-					g.drawImage(chessPiece, (i % 8) * squareWidth, (i / 8) * squareHeight, squareWidth, squareHeight, this);
+					g.drawImage(bKing, (i % 8) * squareWidth, (i / 8) * squareHeight, squareWidth, squareHeight, this);
 					break;
 			}
 		}
@@ -142,29 +162,29 @@ public class BoardPanel extends JPanel implements MouseListener {
 
 				ArrayList<Move> possibleMoves = board.getMoves(Piece.WHITE);
 
-					for (int i = 0; i < possibleMoves.size(); i++) {
-						if (possibleMoves.get(i).equals(move)) {
-							if (game.getAIMoved()) {
-								board.makeMove(move);
-								repaint();
-								turn++;
-								sidePanelCommunicator();
+				for (int i = 0; i < possibleMoves.size(); i++) {
+					if (possibleMoves.get(i).equals(move)) {
+						if (game.getAIMoved()) {
+							board.makeMove(move);
+							repaint();
+							turn++;
+							sidePanelCommunicator();
 
-								if (board.isInCheckmate(false)) {
-									game.setAIMoved(true);
-									game.setPlayerMovedMoved(true);
-									if (normalGame) {
-										game.addPhaseSuggestion(turn);
-									}
-									System.out.println(board);
-								} else {
-									game.setAIMoved(false);
-									game.setPlayerMovedMoved(true);
-									System.out.println(board);
+							if (board.isInCheckmate(false)) {
+								game.setAIMoved(true);
+								game.setPlayerMovedMoved(true);
+								if (normalGame) {
+									game.addPhaseSuggestion(turn);
 								}
+								System.out.println(board);
+							} else {
+								game.setAIMoved(false);
+								game.setPlayerMovedMoved(true);
+								System.out.println(board);
 							}
 						}
 					}
+				}
 
 				if (game.getPlayerMoved() && !board.isInCheckmate(false)) {
 					ai.makeMove();

@@ -5,10 +5,8 @@ import Game.Board;
 import Game.Game;
 import Game.Tile;
 import Pieces.*;
-
 import javax.swing.*;
 import java.awt.*;
-import java.util.Random;
 
 public class MainFrame extends JFrame {
 
@@ -43,9 +41,6 @@ public class MainFrame extends JFrame {
 	}
 
 	public void startMainMenu() {
-//		board = new Board();
-//		ai = new AIPlayer(board, false, depth);
-
 		container.removeAll();
 		container.add(mainMenuPanel);
 		setVisible(true);

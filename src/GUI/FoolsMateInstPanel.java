@@ -1,7 +1,9 @@
 package GUI;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 public class FoolsMateInstPanel extends JPanel {
 
@@ -23,12 +25,23 @@ public class FoolsMateInstPanel extends JPanel {
 
 		helperPanel = new TutorialHelperPanel(this, mainFrame);
 
-		ImageIcon blockImage1 = new ImageIcon("images/foolsmate/foolsmatefinished.png");
-		ImageIcon blockImage2 = new ImageIcon("images/foolsmate/foolsmatestarter.png");
-		ImageIcon blockImage3 = new ImageIcon("images/foolsmate/foolsmateblackmove1.png");
-		ImageIcon blockImage4 = new ImageIcon("images/foolsmate/foolsmatewhitemove2.png");
-		ImageIcon blockImage5 = new ImageIcon("images/foolsmate/foolsmateblackmove2.png");
-		ImageIcon blockImage6 = new ImageIcon("images/foolsmate/foolsmatefinished2.png");
+		ImageIcon blockImage1 = null;
+		ImageIcon blockImage2 = null;
+		ImageIcon blockImage3 = null;
+		ImageIcon blockImage4 = null;
+		ImageIcon blockImage5 = null;
+		ImageIcon blockImage6 = null;
+
+		try {
+			blockImage1 = new ImageIcon(ImageIO.read(ResourceLoader.load("images/foolsmate/foolsmatefinished.PNG")));
+			blockImage2 = new ImageIcon(ImageIO.read(ResourceLoader.load("images/foolsmate/foolsmatestarter.PNG")));
+			blockImage3 = new ImageIcon(ImageIO.read(ResourceLoader.load("images/foolsmate/foolsmateblackmove1.PNG")));
+			blockImage4 = new ImageIcon(ImageIO.read(ResourceLoader.load("images/foolsmate/foolsmatewhitemove2.PNG")));
+			blockImage5 = new ImageIcon(ImageIO.read(ResourceLoader.load("images/foolsmate/foolsmateblackmove2.PNG")));
+			blockImage6 = new ImageIcon(ImageIO.read(ResourceLoader.load("images/foolsmate/foolsmatefinished2.PNG")));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 		String blockText1 = "Fool's Mate is a strategy that black player can use to punish beginner chess players by achieving checkmate in only two moves. " +
 				"As you can see, the white king is in check by the black queen at h5.";
@@ -103,7 +116,13 @@ public class FoolsMateInstPanel extends JPanel {
 	}
 
 	public void printInstructions1() {
-		ImageIcon inst1Image = new ImageIcon("images/foolsmate/foolsmateboardmove1.PNG");
+		ImageIcon inst1Image = null;
+		try {
+			inst1Image = new ImageIcon(ImageIO.read(ResourceLoader.load("images/foolsmate/foolsmateboardmove1.png")));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 		String inst1Text = "Your opponent seems to be falling into the fool's mate trap. Move your pawn and introduce them to the strategy.";
 		TutorialBlock inst1 = new TutorialBlock(inst1Image, inst1Text);
 
@@ -112,7 +131,13 @@ public class FoolsMateInstPanel extends JPanel {
 	}
 
 	public void printInstructions2() {
-		ImageIcon inst2Image = new ImageIcon("images/foolsmate/foolsmateboardmove2.PNG");
+		ImageIcon inst2Image = null;
+		try {
+			inst2Image = new ImageIcon(ImageIO.read(ResourceLoader.load("images/foolsmate/foolsmateboardmove2.png")));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 		String inst2Text = "Finally, move your queen.";
 		TutorialBlock inst2 = new TutorialBlock(inst2Image, inst2Text);
 
@@ -121,7 +146,13 @@ public class FoolsMateInstPanel extends JPanel {
 	}
 
 	public void printfinalInstructions() {
-		ImageIcon inst3Image = new ImageIcon("images/foolsmate/white.PNG");
+		ImageIcon inst3Image = null;
+		try {
+			inst3Image = new ImageIcon(ImageIO.read(ResourceLoader.load("images/foolsmate/white.png")));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 		String inst3Text = "Your opponent is now in checkmate. Good job, you've learned how to use fool's mate. " +
 				"Press the main menu button to leave";
 		TutorialBlock inst3 = new TutorialBlock(inst3Image, inst3Text);

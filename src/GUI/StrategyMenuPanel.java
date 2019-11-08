@@ -25,7 +25,7 @@ public class StrategyMenuPanel extends JPanel {
 		setBackground(Color.WHITE);
 
 		title.setText("Strategies");
-		Font font = new Font(Font.SANS_SERIF, 2, 30);
+		Font font = new Font(Font.SERIF, 1, 36);
 		title.setFont(font);
 		title.setEditable(false);
 

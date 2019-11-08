@@ -17,7 +17,7 @@ public class TutorialHelperPanel extends JPanel {
 	private final JButton finish = new JButton("Finish");
 	private final JButton menu = new JButton("Main Menu");
 
-	public TutorialHelperPanel(FoolsMateInstPanel foolsMatePanel, MainFrame mainFrame) {
+	public TutorialHelperPanel(TutorialTeacherPanel teacherPanel, MainFrame mainFrame) {
 		Dimension size = getPreferredSize();
 		size.width = 185;
 		size.height = 650;
@@ -32,21 +32,25 @@ public class TutorialHelperPanel extends JPanel {
 		prev.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				foolsMatePanel.prevStep();
+				teacherPanel.prevStep();
 			}
 		});
 
 		next.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				foolsMatePanel.nextStep();
+				teacherPanel.nextStep();
 			}
 		});
 
 		finish.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				foolsMatePanel.startStrategyGame();
+				if (teacherPanel.hasBoardTutorial()) {
+					teacherPanel.startStrategyGame();
+				} else {
+					mainFrame.startMainMenu();
+				}
 			}
 		});
 

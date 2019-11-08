@@ -24,6 +24,8 @@ public class MainFrame extends JFrame {
 	private AssessmentPanel assessmentPanel;
 	private StrategyMenuPanel strategyMenuPanel;
 	private FoolsMateInstPanel foolsMateInstPanel;
+	private ProgramTutorialPanel programTutorialPanel;
+	private ChessTutorialPanel chessTutorialPanel;
 	private JPanel gamePanel;
 
 	public MainFrame (String title, Game game) {
@@ -141,6 +143,24 @@ public class MainFrame extends JFrame {
 
 		container.removeAll();
 		container.add(foolsMateInstPanel);
+		setVisible(true);
+		repaint();
+	}
+
+	public void startProgramTutorial() {
+		programTutorialPanel = new ProgramTutorialPanel(this);
+
+		container.removeAll();
+		container.add(programTutorialPanel);
+		setVisible(true);
+		repaint();
+	}
+
+	public void startChessTutorial() {
+		chessTutorialPanel = new ChessTutorialPanel(this);
+
+		container.removeAll();
+		container.add(chessTutorialPanel);
 		setVisible(true);
 		repaint();
 	}

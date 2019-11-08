@@ -24,7 +24,7 @@ public class AIPlayer {
 	}
 
 	private Move decide(Board board, float alpha, float beta, int depth) {
-    	Board newBoard = new Board();
+    	Board newBoard;
     	long startTime = System.currentTimeMillis();
 
     	Move bestMove = null;
@@ -37,24 +37,22 @@ public class AIPlayer {
 		for (int i = 0; i < possibleMoves.size(); i++) {
 			newBoard = board.getBoardAfter(board, possibleMoves.get(i));
 
-			currentValue = min(newBoard, alpha, beta,depth - 1);
+			currentValue = max(newBoard, alpha, beta,depth - 1);
 
 			if (currentValue >= greatestValue) {
 				greatestValue = currentValue;
 				bestMove = possibleMoves.get(i);
-				System.out.println("best move " + i);
 			}
 		}
 
 		long executionTime = System.currentTimeMillis() - startTime;
-
 		System.out.println(executionTime);
 
 		return bestMove;
 	}
 
     private int min(Board board, float alpha, float beta, int depth) {
-		Board newBoard = new Board();
+		Board newBoard;
 		ArrayList<Move> opponentPossibleMoves = board.getMoves(!color);
 
 		if (depth == 0) {
@@ -63,7 +61,6 @@ public class AIPlayer {
 
 		for (int i = 0; i < opponentPossibleMoves.size(); i++) {
 			newBoard = board.getBoardAfter(board, opponentPossibleMoves.get(i));
-			System.out.println("min " + i);
 
 			int currentValue = max(newBoard, alpha, beta,depth - 1);
 
@@ -81,7 +78,7 @@ public class AIPlayer {
 	}
 
 	private int max(Board board, float alpha, float beta, int depth) {
-		Board newBoard = new Board();
+		Board newBoard;
 		ArrayList<Move> possibleMoves = board.getMoves(color);
 
     	if (depth == 0) {
@@ -90,7 +87,6 @@ public class AIPlayer {
 
 		for (int i = 0; i < possibleMoves.size(); i++) {
 			newBoard = board.getBoardAfter(board, possibleMoves.get(i));
-			System.out.println("max " + i);
 
 			int currentValue = min(newBoard, alpha, beta, depth - 1);
 

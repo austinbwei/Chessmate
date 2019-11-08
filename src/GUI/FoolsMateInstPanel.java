@@ -5,7 +5,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 
-public class FoolsMateInstPanel extends JPanel {
+public class FoolsMateInstPanel extends JPanel implements TutorialTeacherPanel {
 
 	private int width;
 	private int height;
@@ -113,6 +113,11 @@ public class FoolsMateInstPanel extends JPanel {
 		repaint();
 		helperPanel.removeSequence();
 		helperPanel.startBoardGuide();
+	}
+
+	@Override
+	public boolean hasBoardTutorial() {
+		return true;
 	}
 
 	public void printInstructions1() {

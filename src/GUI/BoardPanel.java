@@ -187,13 +187,20 @@ public class BoardPanel extends JPanel implements MouseListener {
 				}
 
 				if (game.getPlayerMoved() && !board.isInCheckmate(false)) {
-					ai.makeMove();
+					new SwingWorker() {
+						@Override
+						protected Object doInBackground() throws Exception {
+							ai.makeMove();
+							repaint();
+							turn++;
+							sidePanelCommunicator();
+							game.setPlayerMovedMoved(false);
+							game.setAIMoved(true);
+							System.out.println(board);
+							return null;
+						}
+					}.execute();
 					repaint();
-					turn++;
-					sidePanelCommunicator();
-					game.setPlayerMovedMoved(false);
-					game.setAIMoved(true);
-					System.out.println(board);
 				} else if (board.isInCheckmate(false)) {
 					sidePanelCommunicator();
 					if (normalGame) {

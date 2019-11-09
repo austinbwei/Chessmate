@@ -3,7 +3,6 @@ package GUI;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import AI.AIPlayer;
@@ -30,6 +29,7 @@ public class BoardPanel extends JPanel implements MouseListener {
 	private Move aiMove;
 	private int turn;
 	private boolean normalGame;
+	private ArrayList<MoveCircle> availableMoves;
 
 	private Image wPawn = null;
 	private Image bPawn = null;
@@ -59,6 +59,7 @@ public class BoardPanel extends JPanel implements MouseListener {
 		this.squareWidth = width / 8;
 		this.squareHeight = height / 8;
 		this.addMouseListener(this);
+		availableMoves = new ArrayList<>();
 
 		try {
 			wPawn = ImageIO.read(ResourceLoader.load("images/pieces/wPawn.png"));
@@ -98,6 +99,7 @@ public class BoardPanel extends JPanel implements MouseListener {
 			}
 		}
 
+		// Draw piece images
 		for (int i = 0; i < 64; i++) {
 			switch (board.getTile(i / 8, i % 8).toString()) {
 				case "P":
@@ -138,6 +140,13 @@ public class BoardPanel extends JPanel implements MouseListener {
 					break;
 			}
 		}
+
+		// Draw piece move circles
+		if (availableMoves.size() != 0) {
+			for (int i = 0; i < availableMoves.size(); i++) {
+				availableMoves.get(i).paintComponent(g);
+			}
+		}
 	}
 
 	@Override
@@ -145,11 +154,31 @@ public class BoardPanel extends JPanel implements MouseListener {
 		if (e.getX() < 8 * squareWidth && e.getY() < 8 * squareHeight) {
 			originMouseX = e.getX();
 			originMouseY = e.getY();
+
+			// Get selected piece moves
+			if (board.getTile(originMouseY / squareHeight, originMouseX / squareWidth).getPiece() != null) {
+				ArrayList<Move> pieceMoves;
+				pieceMoves = board.getTile(originMouseY / squareHeight, originMouseX / squareWidth).getPiece().getLegalMoves(board, originMouseY / squareHeight, originMouseX / squareWidth);
+
+				// Add piece moves to list of other piece moves
+				for (int i = 0; i < pieceMoves.size(); i++) {
+					int x = pieceMoves.get(i).getColumnDestination() * squareHeight;
+					int y = pieceMoves.get(i).getRowDestination() * squareWidth;
+
+					MoveCircle circle = new MoveCircle(x, y, squareWidth, squareHeight);
+					availableMoves.add(circle);
+				}
+				pieceMoves.clear();
+				repaint();
+			}
 		}
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
+		availableMoves.clear();
+		repaint();
+
 		if (e.getX() < 8 * squareWidth && e.getY() < 8 * squareHeight) {
 			destMouseX = e.getX();
 			destMouseY = e.getY();

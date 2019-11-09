@@ -26,6 +26,7 @@ public class MainFrame extends JFrame {
 	private FoolsMateInstPanel foolsMateInstPanel;
 	private ProgramTutorialPanel programTutorialPanel;
 	private ChessTutorialPanel chessTutorialPanel;
+	private RequestColorPanel requestColorPanel;
 	private JPanel gamePanel;
 
 	public MainFrame (String title, Game game) {
@@ -56,7 +57,7 @@ public class MainFrame extends JFrame {
 		if (firstGame) {
 			startPreliminaryAssessment();
 		} else {
-			startNormalGame();
+			requestColor();
 		}
 	}
 
@@ -69,10 +70,19 @@ public class MainFrame extends JFrame {
 		repaint();
 	}
 
+	public void requestColor() {
+		requestColorPanel = new RequestColorPanel(this, ai);
+
+		container.removeAll();
+		container.add(requestColorPanel);
+		setVisible(true);
+		repaint();
+	}
+
 	public void startNormalGame() {
 		System.out.println(board);
 
-		sidePanel = new SidePanel(this, board, ai.color);
+		sidePanel = new SidePanel(this, board, ai.getColor());
 		boardPanel = new BoardPanel(board, ai, game, sidePanel, true);
 		columnLabelPanel = new ColumnLabelPanel();
 		rowLabelPanel = new RowLabelPanel();
@@ -87,8 +97,6 @@ public class MainFrame extends JFrame {
 		container.add(gamePanel, BorderLayout.WEST);
 		container.add(sidePanel, BorderLayout.EAST);
 
-		game.setPlayerMovedMoved(false);
-		game.setAIMoved(true);
 		setVisible(true);
 		repaint();
 

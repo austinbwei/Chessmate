@@ -9,7 +9,6 @@ public class TutorialHelperPanel extends JPanel {
 
 	private int width;
 	private int height;
-	private MainFrame mainFrame;
 	private JLabel helpImage = new JLabel(new ImageIcon());
 	private JTextPane textArea = new JTextPane();
 	private final JButton prev = new JButton("Back");
@@ -26,8 +25,6 @@ public class TutorialHelperPanel extends JPanel {
 		this.height = (int) size.getHeight();
 		setBackground(Color.WHITE);
 		textArea.setEditable(false);
-
-		this.mainFrame = mainFrame;
 
 		prev.addActionListener(new ActionListener() {
 			@Override

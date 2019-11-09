@@ -9,7 +9,6 @@ public class AnswerPanel extends JPanel {
 
 	private int width;
 	private int height;
-	private AssessmentPanel assessmentPanel;
 	private final JTextPane instructions = new JTextPane();
 	private final JTextPane originTag = new JTextPane();
 	private final JTextPane destinationTag = new JTextPane();
@@ -24,7 +23,6 @@ public class AnswerPanel extends JPanel {
 		this.setPreferredSize(size);
 		this.width = (int) size.getWidth();
 		this.height = (int) size.getHeight();
-		this.assessmentPanel = assessmentPanel;
 		setBackground(Color.WHITE);
 
 		instructions.setText("Enter what you think is the best move to make if you're playing as white into the fields below. " +

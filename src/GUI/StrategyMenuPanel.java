@@ -11,7 +11,6 @@ public class StrategyMenuPanel extends JPanel {
 	private int height;
 	private JTextPane title;
 	private JButton foolsMate;
-	private MainFrame mainFrame;
 
 	public StrategyMenuPanel(MainFrame mainFrame) {
 		Dimension size = getPreferredSize();
@@ -28,8 +27,6 @@ public class StrategyMenuPanel extends JPanel {
 		Font font = new Font(Font.SERIF, 1, 36);
 		title.setFont(font);
 		title.setEditable(false);
-
-		this.mainFrame = mainFrame;
 
 		foolsMate.addActionListener(new ActionListener() {
 			@Override

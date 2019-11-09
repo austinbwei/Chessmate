@@ -55,4 +55,8 @@ public class StandardEvaluator implements BoardEvaluator {
 		return board.getMoves(color).size() / 2;
 	}
 
+	@Override
+	public void setAIColor(boolean AIColor) {
+		this.AIColor = AIColor;
+	}
 }

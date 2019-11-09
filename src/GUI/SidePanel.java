@@ -9,11 +9,6 @@ import java.awt.event.ActionListener;
 
 public class SidePanel extends JPanel {
 
-	private BoardPanel boardPanel;
-	private MainFrame mainFrame;
-	private Board board;
-	private String chessBoard;
-	private Boolean aiColor;
 	private AIPlayer aiHelper;
 	private int width;
 	private int height;
@@ -23,10 +18,6 @@ public class SidePanel extends JPanel {
 	private final JButton menuButton = new JButton("Main Menu");
 
 	public SidePanel(MainFrame mainFrame, Board board, boolean aiColor) {
-		this.mainFrame = mainFrame;
-		this.board = board;
-		this.aiColor = aiColor;
-
 		aiHelper = new AIPlayer(board, !aiColor, 3);
 
 		Dimension size = getPreferredSize();

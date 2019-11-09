@@ -5,6 +5,7 @@ import Game.Move;
 import java.util.ArrayList;
 
 public class AIPlayer {
+
 	private Board board;
 	private int depth;
 	private BoardEvaluator boardEvaluator;
@@ -108,6 +109,15 @@ public class AIPlayer {
 
 	public int getDepth() {
     	return depth;
+	}
+
+	public void setColor(boolean color) {
+    	this.color = color;
+    	boardEvaluator.setAIColor(color);
+	}
+
+	public boolean getColor() {
+    	return color;
 	}
 
 	/**

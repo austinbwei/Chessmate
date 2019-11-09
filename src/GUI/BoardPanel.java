@@ -9,7 +9,6 @@ import AI.AIPlayer;
 import Game.Board;
 import Game.Move;
 import Game.Game;
-import Pieces.*;
 import java.util.ArrayList;
 
 public class BoardPanel extends JPanel implements MouseListener {
@@ -20,13 +19,13 @@ public class BoardPanel extends JPanel implements MouseListener {
 
 	private Board board;
 	private AIPlayer ai;
+	private boolean aiColor;
 	private Game game;
 	private SidePanel sidePanel;
 	private int width;
 	private int height;
 	private int squareWidth;
 	private int squareHeight;
-	private Move aiMove;
 	private int turn;
 	private boolean normalGame;
 	private ArrayList<MoveCircle> availableMoves;
@@ -47,6 +46,7 @@ public class BoardPanel extends JPanel implements MouseListener {
 	public BoardPanel(Board board, AIPlayer ai, Game game, SidePanel sidePanel, boolean normalGame) {
 		this.board = board;
 		this.ai = ai;
+		this.aiColor = ai.getColor();
 		this.game = game;
 		this.sidePanel = sidePanel;
 
@@ -80,6 +80,24 @@ public class BoardPanel extends JPanel implements MouseListener {
 
 		turn = 0;
 		this.normalGame = normalGame;
+
+		if (aiColor) {
+			game.setAIMoved(false);
+			game.setPlayerMovedMoved(true);
+			new SwingWorker() {
+				@Override
+				protected Object doInBackground() throws Exception {
+					ai.makeMove();
+					repaint();
+					turn++;
+					game.setPlayerMovedMoved(false);
+					game.setAIMoved(true);
+					System.out.println(board);
+					return null;
+				}
+			}.execute();
+			repaint();
+		}
 	}
 
 	@Override
@@ -141,7 +159,7 @@ public class BoardPanel extends JPanel implements MouseListener {
 			}
 		}
 
-		// Draw piece move circles
+		// Draw piece's possible move circles
 		if (availableMoves.size() != 0) {
 			for (int i = 0; i < availableMoves.size(); i++) {
 				availableMoves.get(i).paintComponent(g);
@@ -157,19 +175,21 @@ public class BoardPanel extends JPanel implements MouseListener {
 
 			// Get selected piece moves
 			if (board.getTile(originMouseY / squareHeight, originMouseX / squareWidth).getPiece() != null) {
-				ArrayList<Move> pieceMoves;
-				pieceMoves = board.getTile(originMouseY / squareHeight, originMouseX / squareWidth).getPiece().getLegalMoves(board, originMouseY / squareHeight, originMouseX / squareWidth);
+				if (board.getTile(originMouseY / squareHeight, originMouseX / squareWidth).getPiece().getColor() != aiColor) {
+					ArrayList<Move> pieceMoves;
+					pieceMoves = board.getTile(originMouseY / squareHeight, originMouseX / squareWidth).getPiece().getLegalMoves(board, originMouseY / squareHeight, originMouseX / squareWidth);
 
-				// Add piece moves to list of other piece moves
-				for (int i = 0; i < pieceMoves.size(); i++) {
-					int x = pieceMoves.get(i).getColumnDestination() * squareHeight;
-					int y = pieceMoves.get(i).getRowDestination() * squareWidth;
+					// Add piece moves to list of other piece moves
+					for (int i = 0; i < pieceMoves.size(); i++) {
+						int x = pieceMoves.get(i).getColumnDestination() * squareHeight;
+						int y = pieceMoves.get(i).getRowDestination() * squareWidth;
 
-					MoveCircle circle = new MoveCircle(x, y, squareWidth, squareHeight);
-					availableMoves.add(circle);
+						MoveCircle circle = new MoveCircle(x, y, squareWidth, squareHeight);
+						availableMoves.add(circle);
+					}
+					pieceMoves.clear();
+					repaint();
 				}
-				pieceMoves.clear();
-				repaint();
 			}
 		}
 	}
@@ -184,12 +204,10 @@ public class BoardPanel extends JPanel implements MouseListener {
 			destMouseY = e.getY();
 
 			if (e.getButton() == MouseEvent.BUTTON1) {
-				Move move;
-
-				move = new Move(originMouseY / squareHeight, originMouseX / squareWidth,
+				Move move = new Move(originMouseY / squareHeight, originMouseX / squareWidth,
 						destMouseY / squareHeight, destMouseX / squareWidth);
 
-				ArrayList<Move> possibleMoves = board.getMoves(Piece.WHITE);
+				ArrayList<Move> possibleMoves = board.getMoves(!aiColor);
 
 				for (int i = 0; i < possibleMoves.size(); i++) {
 					if (possibleMoves.get(i).equals(move)) {

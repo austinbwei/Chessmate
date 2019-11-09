@@ -107,7 +107,7 @@ public class AssessmentPanel extends JPanel {
 			aiPlayer.setDepth(1);
 			mainFrame.setAIDepth(1);
 		}
-		mainFrame.startNormalGame();
+		mainFrame.requestColor();
 	}
 
 	/**

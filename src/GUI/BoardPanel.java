@@ -175,21 +175,22 @@ public class BoardPanel extends JPanel implements MouseListener {
 				originMouseX = e.getX();
 				originMouseY = e.getY();
 
-				// Get selected piece moves
+				// Check if user clicked one of their pieces
 				if (board.getTile(originMouseY / squareHeight, originMouseX / squareWidth).getPiece() != null) {
 					if (board.getTile(originMouseY / squareHeight, originMouseX / squareWidth).getPiece().getColor() != aiColor) {
-						ArrayList<Move> pieceMoves;
-						pieceMoves = board.getTile(originMouseY / squareHeight, originMouseX / squareWidth).getPiece().getLegalMoves(board, originMouseY / squareHeight, originMouseX / squareWidth);
+						ArrayList<Move> possibleMoves = board.getMoves(!aiColor);
 
-						// Add piece moves to list of other piece moves
-						for (int i = 0; i < pieceMoves.size(); i++) {
-							int x = pieceMoves.get(i).getColumnDestination() * squareHeight;
-							int y = pieceMoves.get(i).getRowDestination() * squareWidth;
+						// If that piece has any possible moves, show move circles
+						for (int i = 0; i < possibleMoves.size(); i++) {
+							if (originMouseY / squareHeight == possibleMoves.get(i).getRowOrigin() && originMouseX / squareWidth == possibleMoves.get(i).getColumnOrigin()) {
+								int x = possibleMoves.get(i).getColumnDestination() * squareHeight;
+								int y = possibleMoves.get(i).getRowDestination() * squareWidth;
 
-							MoveCircle circle = new MoveCircle(x, y, squareWidth, squareHeight);
-							availableMoves.add(circle);
+								MoveCircle circle = new MoveCircle(x, y, squareWidth, squareHeight);
+								availableMoves.add(circle);
+							}
 						}
-						pieceMoves.clear();
+						possibleMoves.clear();
 						repaint();
 					}
 				}
@@ -221,7 +222,7 @@ public class BoardPanel extends JPanel implements MouseListener {
 								turn++;
 								sidePanelCommunicator();
 
-								if (board.isInCheckmate(false)) {
+								if (board.isInCheckmate(false) || board.isInCheckmate(true)) {
 									game.setAIMoved(true);
 									game.setPlayerMovedMoved(true);
 									if (normalGame) {
@@ -237,7 +238,7 @@ public class BoardPanel extends JPanel implements MouseListener {
 						}
 					}
 
-					if (game.getPlayerMoved() && !board.isInCheckmate(false)) {
+					if (game.getPlayerMoved() && !board.isInCheckmate(false) && !board.isInCheckmate(true)) {
 						new SwingWorker() {
 							@Override
 							protected Object doInBackground() throws Exception {
@@ -254,7 +255,7 @@ public class BoardPanel extends JPanel implements MouseListener {
 							}
 						}.execute();
 						repaint();
-					} else if (board.isInCheckmate(false)) {
+					} else if (board.isInCheckmate(false) && board.isInCheckmate(true)) {
 						sidePanelCommunicator();
 						if (normalGame) {
 							game.addPhaseSuggestion(turn);

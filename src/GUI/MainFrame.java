@@ -116,7 +116,7 @@ public class MainFrame extends JFrame {
 
 		System.out.println(board);
 
-		sidePanel = new SidePanel(this, board, ai.color);
+		sidePanel = new SidePanel(this, board, ai.aiColor);
 		boardPanel = new BoardPanel(board, ai, game, sidePanel, false);
 		columnLabelPanel = new ColumnLabelPanel();
 		rowLabelPanel = new RowLabelPanel();

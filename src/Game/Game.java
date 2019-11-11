@@ -37,9 +37,6 @@ public class Game {
 		} else {
 			phase = 2;
 		}
-
-		System.out.println(phase);
-
 		((MainFrame) jframe).addPhaseSuggestion(phase);
 	}
 

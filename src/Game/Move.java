@@ -6,6 +6,7 @@ public class Move {
     private int columnOrigin;
     private int rowDestination;
     private int columnDestination;
+    private int value;
 
     /**
      * Create a move
@@ -19,6 +20,10 @@ public class Move {
         this.columnOrigin = columnOrigin;
         this.rowDestination = rowDestination;
         this.columnDestination = columnDestination;
+    }
+
+    public Move() {
+
     }
 
     public int getRowOrigin() {
@@ -51,6 +56,14 @@ public class Move {
 
     public void setColumnDestination(int columnDestination) {
         this.columnDestination = columnDestination;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
     }
 
     /**

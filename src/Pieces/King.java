@@ -2,14 +2,13 @@ package Pieces;
 
 import Game.Board;
 import Game.Move;
-
 import java.util.ArrayList;
 
 public class King extends Piece {
 
     public King(boolean color) {
         super(color);
-        value = 10;
+        value = 0;
     }
 
     public King clone() {

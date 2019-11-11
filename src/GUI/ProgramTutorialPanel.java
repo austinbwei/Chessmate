@@ -28,6 +28,7 @@ public class ProgramTutorialPanel extends JPanel {
 				"Starting a game will bring up a 5 question long preliminary assessment to gauge your skill level and adjust AI difficulty. " +
 				"After this, you can play a normal game of chess and request move suggestions from the AI at any time in the game. " +
 				"To make a move, simply click on the piece you want to move, drag your cursor wherever the piece can move, and then release your mouse button. " +
+				"Pay attention to game updates given in the side panel to know when kings are in check/checkmate." +
 				"When the game ends a new option called 'Phase Suggestion' will appear which will create a board scenario of a phase of the game the AI has gauged you may work on. " +
 				"The 'Learn Strategies' option provides a guided experience to learn popular strategies (Limited to Fool's Mate for now).");
 		programInfo.setEditable(false);

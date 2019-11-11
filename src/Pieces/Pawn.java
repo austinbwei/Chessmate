@@ -2,14 +2,13 @@ package Pieces;
 
 import Game.Board;
 import Game.Move;
-
 import java.util.ArrayList;
 
 public class Pawn extends Piece {
 
     public Pawn(boolean color) {
         super(color);
-        value = 1;
+        value = 10;
     }
 
     public Pawn clone() {
@@ -67,8 +66,8 @@ public class Pawn extends Piece {
 
             //Move two spaces
             if (row == 1) {
-                if (isValidMove(row + 2, column)) {
-                    if (!board.getTile(row + 2, column).isOccupied()) {
+                if (isValidMove(row + 2, column) && isValidMove(row + 1, column)) {
+                    if (!board.getTile(row + 2, column).isOccupied() && !board.getTile(row + 1, column).isOccupied()) {
                         possibleMoves.add(new Move(row, column, row + 2, column));
                     }
                 }

@@ -93,8 +93,6 @@ public class MainMenuPanel extends JPanel {
 	}
 
 	public void addPhaseSuggestion(int phase) {
-		System.out.println("Called");
-
 		phaseSuggestion.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

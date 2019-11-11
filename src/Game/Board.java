@@ -1,7 +1,6 @@
 package Game;
 
 import Pieces.*;
-
 import java.util.ArrayList;
 
 public class Board {
@@ -88,6 +87,25 @@ public class Board {
 	}
 
 	/**
+	 * Check if player piece at location is at risk
+	 * @param color of player
+	 * @param x row
+	 * @param y column
+	 * @return whether piece is in a position to be taken or not
+	 */
+	public boolean isPieceAtRisk(boolean color, int x, int y) {
+		ArrayList<Move> opponentMoves = getMoves(!color, false);
+
+		for (int i = 0; i < opponentMoves.size(); i++) {
+			if (opponentMoves.get(i).getRowDestination() == x && opponentMoves.get(i).getColumnDestination() == y) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/**
 	 * Check if player is in check
 	 * @param color player to check for
 	 * @return whether player is in check or is not
@@ -107,45 +125,13 @@ public class Board {
 			}
 		}
 
-		ArrayList<Move> opponentMoves = getMoves(!color, false);
+		if (kingRow != -1 && kingColumn != -1) {
+			ArrayList<Move> opponentMoves = getMoves(!color, false);
 
-		for (int i = 0; i < opponentMoves.size(); i++) {
-			if (opponentMoves.get(i).getRowDestination() == kingRow && opponentMoves.get(i).getColumnDestination() == kingColumn) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	/**
-	 * Determine if a move will take a player out of check
-	 * @param color player to try and get out of check
-	 * @param possibleMoves move to test
-	 * @return whether player is in check or not after a move
-	 */
-	public boolean isInCheckAfterMove(boolean color, ArrayList<Move> possibleMoves) {
-		Tile[][] newTiles = getTilesAfter(possibleMoves);
-
-		int kingRow = -1;
-		int kingColumn = -1;
-
-		for (int i = 0; i < 8; i++) {
-			for (int j = 0; j < 8; j++) {
-				if (newTiles[i][j].isOccupied()
-						&& newTiles[i][j].getPiece().getColor() == color
-						&& newTiles[i][j].getPiece().toString().equalsIgnoreCase("K")) {
-					kingRow = i;
-					kingColumn = j;
+			for (int i = 0; i < opponentMoves.size(); i++) {
+				if (opponentMoves.get(i).getRowDestination() == kingRow && opponentMoves.get(i).getColumnDestination() == kingColumn) {
+					return true;
 				}
-			}
-		}
-
-		ArrayList<Move> opponentMoves = getMovesAfter(!color, possibleMoves, false);
-
-		for (int i = 0; i < opponentMoves.size(); i++) {
-			if (opponentMoves.get(i).getRowDestination() == kingRow && opponentMoves.get(i).getColumnDestination() == kingColumn) {
-				return true;
 			}
 		}
 		return false;
@@ -229,16 +215,6 @@ public class Board {
 	 * Get list of moves after a move has been made
 	 * @param color player to get list of moves for
 	 * @param possibleMoves move to find moves after it has been made
-	 * @return overloaded method to check for check
-	 */
-	public ArrayList<Move> getMovesAfter(boolean color, ArrayList<Move> possibleMoves) {
-		return getMovesAfter(color, possibleMoves, true);
-	}
-
-	/**
-	 * Get list of moves after a move has been made
-	 * @param color player to get list of moves for
-	 * @param possibleMoves move to find moves after it has been made
 	 * @param checkForCheck check if a move will put the player in check
 	 * @return arraylist of moves possible after a move has been made
 	 */
@@ -260,37 +236,6 @@ public class Board {
 		ArrayList<Move> nextMoves = newBoard.getMoves(color, checkForCheck);
 
 		return nextMoves;
-	}
-
-	/**
-	 * Get tiles after a move has been made
-	 * @param possibleMoves move made
-	 * @return 2d array of tiles after a move
-	 */
-	public Tile[][] getTilesAfter(ArrayList<Move> possibleMoves) {
-		Tile[][] newTiles = new Tile[8][8];
-
-		for (int i = 0; i < 8; i++) {
-			for (int j = 0; j < 8; j++) {
-				newTiles[i][j] = new Tile(this.tiles[i][j]);
-			}
-		}
-
-		Board newBoard = new Board(newTiles);
-
-		for (int i = 0; i < possibleMoves.size(); i++) {
-			newBoard.makeMove(possibleMoves.get(i));
-		}
-
-		Tile[][] newTiles2 = new Tile[8][8];
-
-		for (int i = 0; i < 8; i++) {
-			for (int j = 0; j < 8; j++) {
-				newTiles2[i][j] = new Tile(newBoard.getTile(i, j));
-			}
-		}
-
-		return newTiles2;
 	}
 
 	public Board getBoardAfter(Board board, Move move) {

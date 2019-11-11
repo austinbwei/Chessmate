@@ -1,7 +1,6 @@
 package GUI;
 
 import AI.AIPlayer;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;

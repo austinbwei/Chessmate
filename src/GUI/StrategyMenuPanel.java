@@ -11,6 +11,7 @@ public class StrategyMenuPanel extends JPanel {
 	private int height;
 	private JTextPane title;
 	private JButton foolsMate;
+	private JButton mainMenu;
 
 	public StrategyMenuPanel(MainFrame mainFrame) {
 		Dimension size = getPreferredSize();
@@ -21,6 +22,7 @@ public class StrategyMenuPanel extends JPanel {
 		this.height = (int) size.getHeight();
 		title = new JTextPane();
 		foolsMate = new JButton("Fool's Mate");
+		mainMenu = new JButton("Main Menu");
 		setBackground(Color.WHITE);
 
 		title.setText("Strategies");
@@ -35,6 +37,13 @@ public class StrategyMenuPanel extends JPanel {
 			}
 		});
 
+		mainMenu.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mainFrame.startMainMenu();
+			}
+		});
+
 		setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
 
@@ -45,6 +54,10 @@ public class StrategyMenuPanel extends JPanel {
 		gbc.gridx = 0;
 		gbc.gridy = 1;
 		add(foolsMate, gbc);
+
+		gbc.gridx = 0;
+		gbc.gridy = 2;
+		add(mainMenu, gbc);
 	}
 
 }

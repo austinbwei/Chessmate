@@ -2,14 +2,13 @@ package Pieces;
 
 import Game.Board;
 import Game.Move;
-
 import java.util.ArrayList;
 
 public class Rook extends Piece {
 
     public Rook(boolean color) {
         super(color);
-        value = 5;
+        value = 50;
     }
 
     public Rook clone() {

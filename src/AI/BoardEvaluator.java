@@ -4,8 +4,6 @@ import Game.Board;
 
 public interface BoardEvaluator {
 
-	int evaluate(Board board, int depth);
-
-	void setAIColor(boolean AIColor);
+	int evaluate(Board board, boolean color);
 
 }

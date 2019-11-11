@@ -29,6 +29,7 @@ public class BoardPanel extends JPanel implements MouseListener {
 	private int turn;
 	private boolean normalGame;
 	private ArrayList<MoveCircle> availableMoves;
+	private boolean aiThinking = false;
 
 	private Image wPawn = null;
 	private Image bPawn = null;
@@ -169,26 +170,28 @@ public class BoardPanel extends JPanel implements MouseListener {
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		if (e.getX() < 8 * squareWidth && e.getY() < 8 * squareHeight) {
-			originMouseX = e.getX();
-			originMouseY = e.getY();
+		if (!aiThinking) {
+			if (e.getX() < 8 * squareWidth && e.getY() < 8 * squareHeight) {
+				originMouseX = e.getX();
+				originMouseY = e.getY();
 
-			// Get selected piece moves
-			if (board.getTile(originMouseY / squareHeight, originMouseX / squareWidth).getPiece() != null) {
-				if (board.getTile(originMouseY / squareHeight, originMouseX / squareWidth).getPiece().getColor() != aiColor) {
-					ArrayList<Move> pieceMoves;
-					pieceMoves = board.getTile(originMouseY / squareHeight, originMouseX / squareWidth).getPiece().getLegalMoves(board, originMouseY / squareHeight, originMouseX / squareWidth);
+				// Get selected piece moves
+				if (board.getTile(originMouseY / squareHeight, originMouseX / squareWidth).getPiece() != null) {
+					if (board.getTile(originMouseY / squareHeight, originMouseX / squareWidth).getPiece().getColor() != aiColor) {
+						ArrayList<Move> pieceMoves;
+						pieceMoves = board.getTile(originMouseY / squareHeight, originMouseX / squareWidth).getPiece().getLegalMoves(board, originMouseY / squareHeight, originMouseX / squareWidth);
 
-					// Add piece moves to list of other piece moves
-					for (int i = 0; i < pieceMoves.size(); i++) {
-						int x = pieceMoves.get(i).getColumnDestination() * squareHeight;
-						int y = pieceMoves.get(i).getRowDestination() * squareWidth;
+						// Add piece moves to list of other piece moves
+						for (int i = 0; i < pieceMoves.size(); i++) {
+							int x = pieceMoves.get(i).getColumnDestination() * squareHeight;
+							int y = pieceMoves.get(i).getRowDestination() * squareWidth;
 
-						MoveCircle circle = new MoveCircle(x, y, squareWidth, squareHeight);
-						availableMoves.add(circle);
+							MoveCircle circle = new MoveCircle(x, y, squareWidth, squareHeight);
+							availableMoves.add(circle);
+						}
+						pieceMoves.clear();
+						repaint();
 					}
-					pieceMoves.clear();
-					repaint();
 				}
 			}
 		}
@@ -196,66 +199,70 @@ public class BoardPanel extends JPanel implements MouseListener {
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		availableMoves.clear();
-		repaint();
+		if (!aiThinking) {
+			availableMoves.clear();
+			repaint();
 
-		if (e.getX() < 8 * squareWidth && e.getY() < 8 * squareHeight) {
-			destMouseX = e.getX();
-			destMouseY = e.getY();
+			if (e.getX() < 8 * squareWidth && e.getY() < 8 * squareHeight) {
+				destMouseX = e.getX();
+				destMouseY = e.getY();
 
-			if (e.getButton() == MouseEvent.BUTTON1) {
-				Move move = new Move(originMouseY / squareHeight, originMouseX / squareWidth,
-						destMouseY / squareHeight, destMouseX / squareWidth);
+				if (e.getButton() == MouseEvent.BUTTON1) {
+					Move move = new Move(originMouseY / squareHeight, originMouseX / squareWidth,
+							destMouseY / squareHeight, destMouseX / squareWidth);
 
-				ArrayList<Move> possibleMoves = board.getMoves(!aiColor);
+					ArrayList<Move> possibleMoves = board.getMoves(!aiColor);
 
-				for (int i = 0; i < possibleMoves.size(); i++) {
-					if (possibleMoves.get(i).equals(move)) {
-						if (game.getAIMoved()) {
-							board.makeMove(move);
-							repaint();
-							turn++;
-							sidePanelCommunicator();
+					for (int i = 0; i < possibleMoves.size(); i++) {
+						if (possibleMoves.get(i).equals(move)) {
+							if (game.getAIMoved() && !aiThinking) {
+								board.makeMove(move);
+								repaint();
+								turn++;
+								sidePanelCommunicator();
 
-							if (board.isInCheckmate(false)) {
-								game.setAIMoved(true);
-								game.setPlayerMovedMoved(true);
-								if (normalGame) {
-									game.addPhaseSuggestion(turn);
+								if (board.isInCheckmate(false)) {
+									game.setAIMoved(true);
+									game.setPlayerMovedMoved(true);
+									if (normalGame) {
+										game.addPhaseSuggestion(turn);
+									}
+									System.out.println(board);
+								} else {
+									game.setAIMoved(false);
+									game.setPlayerMovedMoved(true);
+									System.out.println(board);
 								}
-								System.out.println(board);
-							} else {
-								game.setAIMoved(false);
-								game.setPlayerMovedMoved(true);
-								System.out.println(board);
 							}
 						}
 					}
-				}
 
-				if (game.getPlayerMoved() && !board.isInCheckmate(false)) {
-					new SwingWorker() {
-						@Override
-						protected Object doInBackground() throws Exception {
-							ai.makeMove();
-							repaint();
-							turn++;
-							sidePanelCommunicator();
-							game.setPlayerMovedMoved(false);
-							game.setAIMoved(true);
-							System.out.println(board);
-							return null;
+					if (game.getPlayerMoved() && !board.isInCheckmate(false)) {
+						new SwingWorker() {
+							@Override
+							protected Object doInBackground() throws Exception {
+								aiThinking = true;
+								ai.makeMove();
+								repaint();
+								turn++;
+								sidePanelCommunicator();
+								game.setPlayerMovedMoved(false);
+								game.setAIMoved(true);
+								aiThinking = false;
+								System.out.println(board);
+								return null;
+							}
+						}.execute();
+						repaint();
+					} else if (board.isInCheckmate(false)) {
+						sidePanelCommunicator();
+						if (normalGame) {
+							game.addPhaseSuggestion(turn);
 						}
-					}.execute();
-					repaint();
-				} else if (board.isInCheckmate(false)) {
-					sidePanelCommunicator();
-					if (normalGame) {
-						game.addPhaseSuggestion(turn);
+						game.setPlayerMovedMoved(true);
+						game.setAIMoved(false);
+						System.out.println(board);
 					}
-					game.setPlayerMovedMoved(true);
-					game.setAIMoved(false);
-					System.out.println(board);
 				}
 			}
 		}

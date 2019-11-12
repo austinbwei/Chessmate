@@ -83,6 +83,7 @@ public class BoardPanel extends JPanel implements MouseListener {
 		this.normalGame = normalGame;
 
 		if (aiColor) {
+			aiThinking = true;
 			game.setAIMoved(false);
 			game.setPlayerMovedMoved(true);
 			new SwingWorker() {
@@ -93,6 +94,7 @@ public class BoardPanel extends JPanel implements MouseListener {
 					turn++;
 					game.setPlayerMovedMoved(false);
 					game.setAIMoved(true);
+					aiThinking = false;
 					System.out.println(board);
 					return null;
 				}
@@ -170,7 +172,7 @@ public class BoardPanel extends JPanel implements MouseListener {
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		if (!aiThinking) {
+		if (!aiThinking && !board.isInCheckmate(aiColor) && !board.isInCheckmate(!aiColor)) {
 			if (e.getX() < 8 * squareWidth && e.getY() < 8 * squareHeight) {
 				originMouseX = e.getX();
 				originMouseY = e.getY();
@@ -270,11 +272,17 @@ public class BoardPanel extends JPanel implements MouseListener {
 	}
 
 	@Override
-	public void mouseClicked(MouseEvent e) {
+	public void mouseEntered(MouseEvent e) {
+
+
+
+
+
 	}
 
+
 	@Override
-	public void mouseEntered(MouseEvent e) {
+	public void mouseClicked(MouseEvent e) {
 	}
 
 	@Override

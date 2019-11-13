@@ -59,7 +59,7 @@ public class StandardEvaluator implements BoardEvaluator {
 				if (tiles[i][j].isOccupied()) {
 					if (tiles[i][j].getPiece().getColor() == color) {
 						if (board.isPieceAtRisk(color, i, j)) {
-							playerDangerScore += tiles[i][j].getPiece().getValue() / 2;
+							playerDangerScore += tiles[i][j].getPiece().getValue();
 						}
 					}
 				}
@@ -69,7 +69,7 @@ public class StandardEvaluator implements BoardEvaluator {
 	}
 
 	private int moveOptions(Board board, boolean color) {
-		return board.getMoves(color).size() / 2;
+		return board.getMoves(color).size() / 3;
 	}
 
 }

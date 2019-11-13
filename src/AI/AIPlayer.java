@@ -69,4 +69,11 @@ public class AIPlayer {
 		return alphaBeta(board, aiColor, Float.NEGATIVE_INFINITY, Float.POSITIVE_INFINITY, 3);
 	}
 
+	// Rates opponent's move against this AI
+	public int rateMove(Board board, Move m) {
+    	Board newBoard = new Board(board.getTiles());
+		newBoard.makeMove(m);
+		return boardEvaluator.evaluate(newBoard, !aiColor);
+	}
+
 }

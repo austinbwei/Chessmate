@@ -30,6 +30,7 @@ public class BoardPanel extends JPanel implements MouseListener {
 	private boolean normalGame;
 	private ArrayList<MoveCircle> availableMoves;
 	private boolean aiThinking = false;
+	private boolean isRating = false;
 
 	private Image wPawn = null;
 	private Image bPawn = null;
@@ -163,10 +164,17 @@ public class BoardPanel extends JPanel implements MouseListener {
 		}
 
 		// Draw piece's possible move circles
-		if (availableMoves.size() != 0) {
+		if (availableMoves.size() > 0) {
 			for (int i = 0; i < availableMoves.size(); i++) {
 				availableMoves.get(i).paintComponent(g);
+				add(availableMoves.get(i));
 			}
+		}
+	}
+
+	private void removeCircles() {
+		for (int i = 0; i < availableMoves.size(); i++) {
+			remove(availableMoves.get(i));
 		}
 	}
 
@@ -185,14 +193,16 @@ public class BoardPanel extends JPanel implements MouseListener {
 						// If that piece has any possible moves, show move circles
 						for (int i = 0; i < possibleMoves.size(); i++) {
 							if (originMouseY / squareHeight == possibleMoves.get(i).getRowOrigin() && originMouseX / squareWidth == possibleMoves.get(i).getColumnOrigin()) {
-								int x = possibleMoves.get(i).getColumnDestination() * squareHeight;
-								int y = possibleMoves.get(i).getRowDestination() * squareWidth;
+								Move foundMove = possibleMoves.get(i);
+								int x = foundMove.getColumnDestination() * squareHeight;
+								int y = foundMove.getRowDestination() * squareWidth;
 
-								MoveCircle circle = new MoveCircle(x, y, squareWidth, squareHeight);
+								MoveCircle circle = new MoveCircle(ai, board, foundMove, x, y, squareWidth, squareHeight);
 								availableMoves.add(circle);
 							}
 						}
 						possibleMoves.clear();
+						revalidate();
 						repaint();
 					}
 				}
@@ -202,8 +212,10 @@ public class BoardPanel extends JPanel implements MouseListener {
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		if (!aiThinking) {
+		if (!aiThinking && !board.isInCheckmate(aiColor) && !board.isInCheckmate(!aiColor)) {
 			availableMoves.clear();
+			removeCircles();
+			revalidate();
 			repaint();
 
 			if (e.getX() < 8 * squareWidth && e.getY() < 8 * squareHeight) {

@@ -5,13 +5,9 @@ import GUI.*;
 
 public class Game {
 
-	private boolean AIMoved;
-	private boolean playerMoved;
 	private JFrame jframe;
 
-	Game(boolean AIMoved, boolean playerMoved) {
-		this.AIMoved = AIMoved;
-		this.playerMoved = playerMoved;
+	Game() {
 		this.jframe = new MainFrame("Chess", this);
 	}
 
@@ -25,6 +21,10 @@ public class Game {
 		jframe.setVisible(true);
 	}
 
+	/**
+	 * Pass generated phase suggestion to mainframe
+	 * @param turns a normal game took before finished
+	 */
 	public void addPhaseSuggestion(int turns) {
 		//0 = early, 1 = mid, 2 = late
 		int phase;
@@ -38,22 +38,6 @@ public class Game {
 			phase = 2;
 		}
 		((MainFrame) jframe).addPhaseSuggestion(phase);
-	}
-
-	public boolean getAIMoved() {
-		return AIMoved;
-	}
-
-	public boolean getPlayerMoved() {
-		return playerMoved;
-	}
-
-	public void setAIMoved(boolean hasMoved) {
-		this.AIMoved = hasMoved;
-	}
-
-	public void setPlayerMovedMoved(boolean hasMoved) {
-		this.playerMoved = hasMoved;
 	}
 
 }

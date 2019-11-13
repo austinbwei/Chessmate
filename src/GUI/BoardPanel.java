@@ -28,9 +28,9 @@ public class BoardPanel extends JPanel implements MouseListener {
 	private int squareHeight;
 	private int turn;
 	private boolean normalGame;
+	private boolean playerTurn;
 	private ArrayList<MoveCircle> availableMoves;
-	private boolean aiThinking = false;
-	private boolean isRating = false;
+	private boolean aiThinking;
 
 	private Image wPawn = null;
 	private Image bPawn = null;
@@ -51,6 +51,7 @@ public class BoardPanel extends JPanel implements MouseListener {
 		this.aiColor = ai.getColor();
 		this.game = game;
 		this.sidePanel = sidePanel;
+		this.normalGame = normalGame;
 
 		Dimension size = getPreferredSize();
 		size.width = 500;
@@ -85,22 +86,11 @@ public class BoardPanel extends JPanel implements MouseListener {
 
 		if (aiColor) {
 			aiThinking = true;
-			game.setAIMoved(false);
-			game.setPlayerMovedMoved(true);
-			new SwingWorker() {
-				@Override
-				protected Object doInBackground() throws Exception {
-					ai.makeMove();
-					repaint();
-					turn++;
-					game.setPlayerMovedMoved(false);
-					game.setAIMoved(true);
-					aiThinking = false;
-					System.out.println(board);
-					return null;
-				}
-			}.execute();
-			repaint();
+			playerTurn = false;
+			aiTurn();
+		} else {
+			aiThinking = false;
+			playerTurn = true;
 		}
 	}
 
@@ -109,6 +99,7 @@ public class BoardPanel extends JPanel implements MouseListener {
 		super.paintComponent(g);
 		this.setBackground(Color.WHITE);
 
+		// Draw chessboard grid
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
 				if ((i + j) % 2 == 1) {
@@ -180,7 +171,7 @@ public class BoardPanel extends JPanel implements MouseListener {
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		if (!aiThinking && !board.isInCheckmate(aiColor) && !board.isInCheckmate(!aiColor)) {
+		if (!aiThinking && playerTurn && !board.isGameOver()) {
 			if (e.getX() < 8 * squareWidth && e.getY() < 8 * squareHeight) {
 				originMouseX = e.getX();
 				originMouseY = e.getY();
@@ -212,7 +203,7 @@ public class BoardPanel extends JPanel implements MouseListener {
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		if (!aiThinking && !board.isInCheckmate(aiColor) && !board.isInCheckmate(!aiColor)) {
+		if (!aiThinking && playerTurn && !board.isGameOver()) {
 			availableMoves.clear();
 			removeCircles();
 			revalidate();
@@ -230,77 +221,58 @@ public class BoardPanel extends JPanel implements MouseListener {
 
 					for (int i = 0; i < possibleMoves.size(); i++) {
 						if (possibleMoves.get(i).equals(move)) {
-							if (game.getAIMoved() && !aiThinking) {
-								board.makeMove(move);
-								repaint();
-								turn++;
-								sidePanelCommunicator();
+							board.makeMove(move);
+							repaint();
+							turn++;
+							sidePanelCommunicator();
+							System.out.println(board);
 
-								if (board.isInCheckmate(false) || board.isInCheckmate(true)) {
-									game.setAIMoved(true);
-									game.setPlayerMovedMoved(true);
-									if (normalGame) {
-										game.addPhaseSuggestion(turn);
-									}
-									System.out.println(board);
-								} else {
-									game.setAIMoved(false);
-									game.setPlayerMovedMoved(true);
-									System.out.println(board);
+							if (board.isGameOver()) {
+								if (normalGame) {
+									game.addPhaseSuggestion(turn);
 								}
-							}
-						}
-					}
-
-					if (game.getPlayerMoved() && !board.isInCheckmate(false) && !board.isInCheckmate(true)) {
-						new SwingWorker() {
-							@Override
-							protected Object doInBackground() throws Exception {
+							} else {
 								aiThinking = true;
-								ai.makeMove();
-								repaint();
-								turn++;
-								sidePanelCommunicator();
-								game.setPlayerMovedMoved(false);
-								game.setAIMoved(true);
-								aiThinking = false;
-								System.out.println(board);
-								return null;
+								aiTurn();
 							}
-						}.execute();
-						repaint();
-					} else if (board.isInCheckmate(false) && board.isInCheckmate(true)) {
-						sidePanelCommunicator();
-						if (normalGame) {
-							game.addPhaseSuggestion(turn);
 						}
-						game.setPlayerMovedMoved(true);
-						game.setAIMoved(false);
-						System.out.println(board);
 					}
 				}
 			}
 		}
 	}
 
-	@Override
-	public void mouseEntered(MouseEvent e) {
+	/**
+	 * AI Make move
+	 */
+	private void aiTurn() {
+		new SwingWorker() {
+			@Override
+			protected Object doInBackground() throws Exception {
+				playerTurn = false;
+				ai.makeMove();
+				repaint();
+				turn++;
+				sidePanelCommunicator();
+				aiThinking = false;
+				System.out.println(board);
 
-
-
-
-
+				if (board.isGameOver()) {
+					if (normalGame) {
+						game.addPhaseSuggestion(turn);
+					}
+				} else {
+					playerTurn = true;
+				}
+				return null;
+			}
+		}.execute();
+		repaint();
 	}
 
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-	}
-
+	/**
+	 * Add game updates to side panel
+	 */
 	private void sidePanelCommunicator() {
 		if (board.isInCheckmate(true)) {
 			System.out.println("Checkmate!");
@@ -314,9 +286,25 @@ public class BoardPanel extends JPanel implements MouseListener {
 		} else if (board.isInCheck(false)) {
 			System.out.println("Check!");
 			sidePanel.addCheckIndicator(false);
+		} else if (board.isInStalemate(true)) {
+			System.out.println("Stalemate!");
+			sidePanel.addStalemateIndicator(true);
+		} else if (board.isInStalemate(false)) {
+			System.out.println("Stalemate!");
+			sidePanel.addStalemateIndicator(false);
 		} else {
 			sidePanel.resetField();
 		}
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+	}
+	@Override
+	public void mouseClicked(MouseEvent e) {
+	}
+	@Override
+	public void mouseExited(MouseEvent e) {
 	}
 
 }

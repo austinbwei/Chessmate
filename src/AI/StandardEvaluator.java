@@ -18,6 +18,12 @@ public class StandardEvaluator implements BoardEvaluator {
 				piecesAtRisk(board, color);
 	}
 
+	/**
+	 * Returns value if it results in opponent being in check
+	 * @param board to judge and evaluate
+	 * @param color of player
+	 * @return Value if opponent will be in check
+	 */
 	private int check(Board board, boolean color) {
 		if (board.isInCheck(!color)) {
 			return 50;
@@ -26,6 +32,12 @@ public class StandardEvaluator implements BoardEvaluator {
 		}
 	}
 
+	/**
+	 * Returns value if it results in opponent being in checkmate
+	 * @param board to judge and evaluate
+	 * @param color of player
+	 * @return Value if opponent will be in checkmate
+	 */
 	private int checkmate(Board board, boolean color) {
 		if (board.isInCheckmate(!color)) {
 			return 500;
@@ -34,6 +46,12 @@ public class StandardEvaluator implements BoardEvaluator {
 		}
 	}
 
+	/**
+	 * Gets all friendly piece values
+	 * @param board to judge and evaluate
+	 * @param color of player
+	 * @return All friendly piece values
+	 */
 	private int pieceValue(Board board, boolean color) {
 		Tile[][] tiles = board.getTiles();
 		int playerPieceScore = 0;
@@ -50,6 +68,12 @@ public class StandardEvaluator implements BoardEvaluator {
 		return playerPieceScore;
 	}
 
+	/**
+	 * Gets piece values of pieces in a position that they can be taken by another piece
+	 * @param board to judge and evaluate
+	 * @param color of player
+	 * @return All friendly piece values that can be taken by the opponent
+	 */
 	private int piecesAtRisk(Board board, boolean color) {
 		Tile[][] tiles = board.getTiles();
 		int playerDangerScore = 0;
@@ -68,6 +92,12 @@ public class StandardEvaluator implements BoardEvaluator {
 		return playerDangerScore;
 	}
 
+	/**
+	 * Number of moves available
+	 * @param board to judge and evaluate
+	 * @param color of player
+	 * @return Number of move options available
+	 */
 	private int moveOptions(Board board, boolean color) {
 		return board.getMoves(color).size() / 3;
 	}

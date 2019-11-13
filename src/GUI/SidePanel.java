@@ -93,6 +93,14 @@ public class SidePanel extends JPanel {
 		}
 	}
 
+	public void addStalemateIndicator(boolean color) {
+		if (color) {
+			updateField.setText("White is in stalemate! \nPress the main menu button.");
+		} else {
+			updateField.setText("Black is in stalemate! \nPress the main menu button.");
+		}
+	}
+
 	public void resetField() {
 		updateField.setText(" ");
 	}

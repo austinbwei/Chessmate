@@ -131,8 +131,6 @@ public class MainFrame extends JFrame {
 		container.add(gamePanel, BorderLayout.WEST);
 		container.add(sidePanel, BorderLayout.EAST);
 
-		game.setPlayerMovedMoved(false);
-		game.setAIMoved(true);
 		setVisible(true);
 		repaint();
 	}
@@ -181,6 +179,10 @@ public class MainFrame extends JFrame {
 		this.depth = depth;
 	}
 
+	/**
+	 * Generate a board in mid game
+	 * @return board in mid game
+	 */
 	private Board getMidBoard() {
 		Tile[][] tiles = new Tile[8][8];
 		int random = (int) (Math.random() * 3);
@@ -276,6 +278,10 @@ public class MainFrame extends JFrame {
 		return board;
 	}
 
+	/**
+	 * Generate a board in late game
+	 * @return a board in late game
+	 */
 	private Board getLateBoard() {
 		Tile[][] tiles = new Tile[8][8];
 		int random = (int) (Math.random() * 3);

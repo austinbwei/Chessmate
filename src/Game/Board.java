@@ -137,8 +137,40 @@ public class Board {
 		return false;
 	}
 
+	/**
+	 * Determine if player is in checkmate for current board
+	 * If they have no moves and are also in check
+	 * @param color of player being checked
+	 * @return true if player is in checkmate
+	 */
 	public boolean isInCheckmate(boolean color) {
-		if(getMoves(color).size() == 0) {
+		if (getMoves(color).size() == 0 && isInCheck(color)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * Determine if player is in stalemate for current board
+	 * If they have no moves but are not in check
+	 * @param color of player being checked
+	 * @return true if in stalemate
+	 */
+	public boolean isInStalemate(boolean color) {
+		if (getMoves(color).size() == 0 && !isInCheck(color)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * Determine if either player is in checkmate or stalemate
+	 * @return true if either player is in checkmate or stalemate
+	 */
+	public boolean isGameOver() {
+		if (isInCheckmate(true) || isInCheckmate(false) || isInStalemate(true) || isInStalemate(false)) {
 			return true;
 		} else {
 			return false;
@@ -238,14 +270,10 @@ public class Board {
 		return nextMoves;
 	}
 
-	public Board getBoardAfter(Board board, Move move) {
-		Board newBoard = new Board(board.getTiles());
-
-		newBoard.makeMove(move);
-
-		return newBoard;
-	}
-
+	/**
+	 * Get 2D array of Tile objects of this board
+	 * @return 2D array of Tile objects of this board
+	 */
 	public Tile[][] getTiles() {
 		Tile[][] tiles = new Tile[8][8];
 

@@ -61,15 +61,27 @@ public class AIPlayer {
     	return aiColor;
 	}
 
+	/**
+	 * Make the best move evaluated on the board given
+	 */
 	public void makeMove() {
 		board.makeMove(alphaBeta(board, aiColor, Float.NEGATIVE_INFINITY, Float.POSITIVE_INFINITY, depth));
 	}
 
+	/**
+	 * Get the best move without making the move
+	 * @return most valuable move
+	 */
 	public Move suggestMove() {
-		return alphaBeta(board, aiColor, Float.NEGATIVE_INFINITY, Float.POSITIVE_INFINITY, 3);
+		return alphaBeta(board, aiColor, Float.NEGATIVE_INFINITY, Float.POSITIVE_INFINITY, 4);
 	}
 
-	// Rates opponent's move against this AI
+	/**
+	 * Rate opponent's move against this AI
+	 * @param board to judge
+	 * @param m move being tested
+	 * @return value of move
+	 */
 	public int rateMove(Board board, Move m) {
     	Board newBoard = new Board(board.getTiles());
 		newBoard.makeMove(m);

@@ -23,81 +23,40 @@ public class Board {
 		boolean colorBlack = Piece.BLACK;
 		tiles = new Tile[8][8];
 
+		//White Pieces
+		tiles[7][0] = new Tile(new Rook(colorWhite));
+		tiles[7][1] = new Tile(new Knight(colorWhite));
+		tiles[7][2] = new Tile(new Bishop(colorWhite));
+		tiles[7][3] = new Tile(new Queen(colorWhite));
+		tiles[7][4] = new Tile(new King(colorWhite));
+		tiles[7][5] = new Tile(new Bishop(colorWhite));
+		tiles[7][6] = new Tile(new Knight(colorWhite));
+		tiles[7][7] = new Tile(new Rook(colorWhite));
+
 		for (int i = 0; i < 8; i++) {
+			tiles[6][i] = new Tile(new Pawn(colorWhite));
+		}
+
+		//No mans land
+		for (int i = 2; i < 6; i++) {
 			for (int j = 0; j < 8; j++) {
 				tiles[i][j] = new Tile();
 			}
 		}
 
-		tiles[0][6] = new Tile(new Rook(colorBlack));
+		//Black pieces
+		tiles[0][0] = new Tile(new Rook(colorBlack));
+		tiles[0][1] = new Tile(new Knight(colorBlack));
+		tiles[0][2] = new Tile(new Bishop(colorBlack));
+		tiles[0][3] = new Tile(new Queen(colorBlack));
 		tiles[0][4] = new Tile(new King(colorBlack));
-		tiles[0][1] = new Tile(new Rook(colorBlack));
+		tiles[0][5] = new Tile(new Bishop(colorBlack));
+		tiles[0][6] = new Tile(new Knight(colorBlack));
+		tiles[0][7] = new Tile(new Rook(colorBlack));
 
-		tiles[1][7] = new Tile(new Pawn(colorBlack));
-		tiles[1][5] = new Tile(new Pawn(colorBlack));
-		tiles[1][4] = new Tile(new Knight(colorBlack));
-		tiles[1][3] = new Tile(new Pawn(colorBlack));
-		tiles[1][2] = new Tile(new Pawn(colorBlack));
-		tiles[1][1] = new Tile(new Bishop(colorBlack));
-		tiles[1][0] = new Tile(new Pawn(colorBlack));
-
-		tiles[2][5] = new Tile(new Pawn(colorWhite));
-		tiles[2][2] = new Tile(new Knight(colorBlack));
-		tiles[2][1] = new Tile(new Bishop(colorBlack));
-
-		tiles[4][0] = new Tile(new Queen(colorWhite));
-
-		tiles[5][5] = new Tile(new Queen(colorBlack));
-		tiles[5][3] = new Tile(new Bishop(colorWhite));
-		tiles[5][2] = new Tile(new Pawn(colorWhite));
-		tiles[5][0] = new Tile(new Bishop(colorWhite));
-
-		tiles[6][7] = new Tile(new Pawn(colorWhite));
-		tiles[6][6] = new Tile(new Pawn(colorWhite));
-		tiles[6][5] = new Tile(new Pawn(colorWhite));
-		tiles[6][0] = new Tile(new Pawn(colorWhite));
-
-		tiles[7][6] = new Tile(new King(colorWhite));
-		tiles[7][4] = new Tile(new Rook(colorWhite));
-		tiles[7][3] = new Tile(new Rook(colorWhite));
-
-
-
-
-//		//White Pieces
-//		tiles[7][0] = new Tile(new Rook(colorWhite));
-//		tiles[7][1] = new Tile(new Knight(colorWhite));
-//		tiles[7][2] = new Tile(new Bishop(colorWhite));
-//		tiles[7][3] = new Tile(new Queen(colorWhite));
-//		tiles[7][4] = new Tile(new King(colorWhite));
-//		tiles[7][5] = new Tile(new Bishop(colorWhite));
-//		tiles[7][6] = new Tile(new Knight(colorWhite));
-//		tiles[7][7] = new Tile(new Rook(colorWhite));
-//
-//		for (int i = 0; i < 8; i++) {
-//			tiles[6][i] = new Tile(new Pawn(colorWhite));
-//		}
-//
-//		//No mans land
-//		for (int i = 2; i < 6; i++) {
-//			for (int j = 0; j < 8; j++) {
-//				tiles[i][j] = new Tile();
-//			}
-//		}
-//
-//		//Black pieces
-//		tiles[0][0] = new Tile(new Rook(colorBlack));
-//		tiles[0][1] = new Tile(new Knight(colorBlack));
-//		tiles[0][2] = new Tile(new Bishop(colorBlack));
-//		tiles[0][3] = new Tile(new Queen(colorBlack));
-//		tiles[0][4] = new Tile(new King(colorBlack));
-//		tiles[0][5] = new Tile(new Bishop(colorBlack));
-//		tiles[0][6] = new Tile(new Knight(colorBlack));
-//		tiles[0][7] = new Tile(new Rook(colorBlack));
-//
-//		for (int i = 0; i < 8; i++) {
-//			tiles[1][i] = new Tile(new Pawn(colorBlack));
-//		}
+		for (int i = 0; i < 8; i++) {
+			tiles[1][i] = new Tile(new Pawn(colorBlack));
+		}
 	}
 
 	/**

@@ -23,8 +23,8 @@ public class AssessmentPanel extends JPanel {
 	private final String[] q1Destinations = {"d1", "a2"};
 
 	private ImageIcon q2Image = null;
-	private final String[] q2Origins = {"c7"};
-	private final String[] q2Destinations = {"c5"};
+	private final String[] q2Origins = {"e8"};
+	private final String[] q2Destinations = {"e2"};
 
 	private ImageIcon q3Image = null;
 	private final String[] q3Origins = {"h6"};
@@ -51,7 +51,7 @@ public class AssessmentPanel extends JPanel {
 
 		try {
 			q1Image = new ImageIcon(ImageIO.read(ResourceLoader.load("images/questionImages/question1.PNG")));
-			q2Image = new ImageIcon(ImageIO.read(ResourceLoader.load("images/questionImages/question2.PNG")));
+			q2Image = new ImageIcon(ImageIO.read(ResourceLoader.load("images/questionImages/questionEvergreen.PNG")));
 			q3Image = new ImageIcon(ImageIO.read(ResourceLoader.load("images/questionImages/question3.PNG")));
 			q4Image = new ImageIcon(ImageIO.read(ResourceLoader.load("images/questionImages/question4.PNG")));
 			q5Image = new ImageIcon(ImageIO.read(ResourceLoader.load("images/questionImages/question5.PNG")));
@@ -96,10 +96,10 @@ public class AssessmentPanel extends JPanel {
 	 * Set AI depth and start the game
 	 */
 	private void testComplete() {
-		if (score >= 4) {
+		if (score == 5) {
 			aiPlayer.setDepth(3);
 			mainFrame.setAIDepth(3);
-		} else if (score >= 2) {
+		} else if (score >= 3) {
 			aiPlayer.setDepth(2);
 			mainFrame.setAIDepth(2);
 		} else {

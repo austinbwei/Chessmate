@@ -15,7 +15,8 @@ public class StandardEvaluator implements BoardEvaluator {
 				check(board, color) +
 				checkmate(board, color) +
 				moveOptions(board, color) -
-				piecesAtRisk(board, color);
+				piecesAtRisk(board, color) -
+				stalemate(board, color);
 	}
 
 	/**
@@ -90,6 +91,21 @@ public class StandardEvaluator implements BoardEvaluator {
 			}
 		}
 		return playerDangerScore;
+	}
+
+	/**
+	 * Determines if opposite player is in stalemate
+	 * AI is looking for a win rather than a draw
+	 * @param board to judge and evaluate
+	 * @param color of player
+	 * @return Value if opponent is in stalemate
+	 */
+	private int stalemate(Board board, boolean color) {
+		if (board.isInStalemate(!color)) {
+			return 300;
+		} else {
+			return 0;
+		}
 	}
 
 	/**

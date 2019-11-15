@@ -59,7 +59,7 @@ Some macs have Java preinstalled so try running the chesstrainer.jar file by ctr
 
 ## Feedback
 
-After playing a game please support the project by filling out [this survey](https://forms.gle/CmpJTDiSHcA2DRbv6).
+After playing a game please support the project by filling out [this survey](https://forms.gle/yb6PhrCGzdKJPXxT6).
 
 ## Acknowledgements
 

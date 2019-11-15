@@ -8,7 +8,7 @@ public class Queen extends Piece {
 
     public Queen(boolean color) {
         super(color);
-        value = 90;
+        value = 900;
     }
 
     public Queen clone() {

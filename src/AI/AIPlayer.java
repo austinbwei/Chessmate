@@ -85,7 +85,7 @@ public class AIPlayer {
 	public int rateMove(Board board, Move m) {
     	Board newBoard = new Board(board.getTiles());
 		newBoard.makeMove(m);
-		return boardEvaluator.evaluate(newBoard, !aiColor);
+		return boardEvaluator.evaluate(newBoard, !aiColor) / 10;
 	}
 
 }

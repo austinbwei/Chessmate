@@ -167,10 +167,12 @@ public class BoardPanel extends JPanel implements MouseListener {
 		for (int i = 0; i < availableMoves.size(); i++) {
 			remove(availableMoves.get(i));
 		}
+		availableMoves.clear();
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
+		removeCircles();
 		if (!aiThinking && playerTurn && !board.isGameOver()) {
 			if (e.getX() < 8 * squareWidth && e.getY() < 8 * squareHeight) {
 				originMouseX = e.getX();

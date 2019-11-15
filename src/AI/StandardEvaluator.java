@@ -14,7 +14,8 @@ public class StandardEvaluator implements BoardEvaluator {
 		return pieceValue(board, color) +
 				check(board, color) +
 				checkmate(board, color) +
-				moveOptions(board, color) -
+				moveOptions(board, color) +
+				positionRation(board, color) -
 				piecesAtRisk(board, color) -
 				stalemate(board, color);
 	}
@@ -27,7 +28,7 @@ public class StandardEvaluator implements BoardEvaluator {
 	 */
 	private int check(Board board, boolean color) {
 		if (board.isInCheck(!color)) {
-			return 50;
+			return 30;
 		} else {
 			return 0;
 		}
@@ -117,5 +118,20 @@ public class StandardEvaluator implements BoardEvaluator {
 	private int moveOptions(Board board, boolean color) {
 		return board.getMoves(color).size() / 3;
 	}
+
+	private int positionRation(Board board, boolean color) {
+		return 0;
+	}
+
+	int[][] wPawnPos = {
+			{},
+			{},
+			{},
+			{},
+			{},
+			{},
+			{},
+			{}
+	};
 
 }

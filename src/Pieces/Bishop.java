@@ -8,7 +8,7 @@ public class Bishop extends Piece {
 
     public Bishop(boolean color) {
         super(color);
-        value = 30;
+        value = 300;
     }
 
     public Bishop clone() {

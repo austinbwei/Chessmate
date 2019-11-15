@@ -8,7 +8,7 @@ public class Pawn extends Piece {
 
     public Pawn(boolean color) {
         super(color);
-        value = 10;
+        value = 100;
     }
 
     public Pawn clone() {

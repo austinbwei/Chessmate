@@ -8,7 +8,7 @@ public class Knight extends Piece {
 
     public Knight(boolean color) {
         super(color);
-        value = 30;
+        value = 300;
     }
 
     public Knight clone() {

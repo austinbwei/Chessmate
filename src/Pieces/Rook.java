@@ -8,7 +8,7 @@ public class Rook extends Piece {
 
     public Rook(boolean color) {
         super(color);
-        value = 50;
+        value = 500;
     }
 
     public Rook clone() {
@@ -66,7 +66,7 @@ public class Rook extends Piece {
             }
         }
 
-        //West
+        //East
         for (int i = 1; i < 8; i++) {
             if (isValidMove(row + i, column)) {
                 if (board.getTile(row + i, column).isOccupied()) {

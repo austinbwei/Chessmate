@@ -19,15 +19,11 @@ public class MoveCircle extends JComponent {
 		this.y = y + 15;
 		this.squareWidth = squareWidth / 2;
 		this.squareHeight = squareHeight / 2;
-		this.setBounds(new Rectangle(x, y, squareWidth, squareHeight));
-		setPreferredSize(new Dimension(squareWidth, squareHeight));
-
 		value = ai.rateMove(board, move);
 	}
 
 	@Override
 	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
 		g.setColor(Color.CYAN);
 		g.fillOval(x, y, squareWidth, squareHeight);
 

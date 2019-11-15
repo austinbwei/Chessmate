@@ -1,6 +1,6 @@
 # Chess Trainer
 
-Chess Trainer is an AI driven chess engine aimed at improving begining player's chess playing abilities by offering a fair challenge and gameplay suggestions.
+Chess Trainer is an AI driven chess engine aimed at improving beginner player's chess playing abilities by offering a fair challenge and gameplay suggestions.
 
 ## Features
 

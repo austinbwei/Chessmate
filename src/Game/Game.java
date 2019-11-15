@@ -8,7 +8,7 @@ public class Game {
 	private JFrame jframe;
 
 	Game() {
-		this.jframe = new MainFrame("Chess", this);
+		this.jframe = new MainFrame("Chess Trainer", this);
 	}
 
 	/**

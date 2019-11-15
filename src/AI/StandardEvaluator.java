@@ -30,7 +30,7 @@ public class StandardEvaluator implements BoardEvaluator {
 	 */
 	private int check(Board board, boolean color) {
 		if (board.isInCheck(!color)) {
-			return 250;
+			return 100;
 		} else {
 			return 0;
 		}
@@ -87,7 +87,7 @@ public class StandardEvaluator implements BoardEvaluator {
 				if (tiles[i][j].isOccupied()) {
 					if (tiles[i][j].getPiece().getColor() == color) {
 						if (board.isPieceAtRisk(color, i, j)) {
-							playerDangerScore += tiles[i][j].getPiece().getValue() * 1.5;
+							playerDangerScore += tiles[i][j].getPiece().getValue() * 2;
 						}
 					}
 				}
@@ -105,7 +105,7 @@ public class StandardEvaluator implements BoardEvaluator {
 	 */
 	private int stalemate(Board board, boolean color) {
 		if (board.isInStalemate(!color)) {
-			return 2000;
+			return 1500;
 		} else {
 			return 0;
 		}

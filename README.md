@@ -21,7 +21,15 @@ Here's all you need to know to use Chess Trainer.
 
 ### Installation
 
-After installing the .zip file, extract its contents and open the lib folder. Open the chesstrainer.jar file (you may need to pass warnings from your operating system), if it does not open go to the bin folder and open ChessTrainer.bat. If the program still does not open, refer to [prerequisites](#prerequisites).
+After installing the .zip file, extract its contents and open the extracted folder.
+
+#### Windows
+ 
+Run the chesstrainer.exe to use the program.
+ 
+#### Mac
+ 
+Some macs have Java preinstalled so try running the chesstrainer.jar file to run the program. If it does not open, refer to [prerequisites](#prerequisites).
 
 ### Usage
 

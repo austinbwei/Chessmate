@@ -5,8 +5,10 @@ import Game.Tile;
 
 public class StandardEvaluator implements BoardEvaluator {
 
-	StandardEvaluator() {
+	private PositionValues positionValues;
 
+	StandardEvaluator() {
+		positionValues = new PositionValues();
 	}
 
 	@Override
@@ -15,7 +17,7 @@ public class StandardEvaluator implements BoardEvaluator {
 				check(board, color) +
 				checkmate(board, color) +
 				moveOptions(board, color) +
-				positionRation(board, color) -
+				positionRating(board, color) -
 				piecesAtRisk(board, color) -
 				stalemate(board, color);
 	}
@@ -28,7 +30,7 @@ public class StandardEvaluator implements BoardEvaluator {
 	 */
 	private int check(Board board, boolean color) {
 		if (board.isInCheck(!color)) {
-			return 30;
+			return 250;
 		} else {
 			return 0;
 		}
@@ -42,7 +44,7 @@ public class StandardEvaluator implements BoardEvaluator {
 	 */
 	private int checkmate(Board board, boolean color) {
 		if (board.isInCheckmate(!color)) {
-			return 500;
+			return 10000;
 		} else {
 			return 0;
 		}
@@ -85,7 +87,7 @@ public class StandardEvaluator implements BoardEvaluator {
 				if (tiles[i][j].isOccupied()) {
 					if (tiles[i][j].getPiece().getColor() == color) {
 						if (board.isPieceAtRisk(color, i, j)) {
-							playerDangerScore += tiles[i][j].getPiece().getValue();
+							playerDangerScore += tiles[i][j].getPiece().getValue() * 1.5;
 						}
 					}
 				}
@@ -103,7 +105,7 @@ public class StandardEvaluator implements BoardEvaluator {
 	 */
 	private int stalemate(Board board, boolean color) {
 		if (board.isInStalemate(!color)) {
-			return 200;
+			return 2000;
 		} else {
 			return 0;
 		}
@@ -116,22 +118,29 @@ public class StandardEvaluator implements BoardEvaluator {
 	 * @return Number of move options available
 	 */
 	private int moveOptions(Board board, boolean color) {
-		return board.getMoves(color).size() / 3;
+		return board.getMoves(color).size();
 	}
 
-	private int positionRation(Board board, boolean color) {
-		return 0;
-	}
+	/**
+	 * Rating of current piece positioning
+	 * @param board to judge and evaluate
+	 * @param color of player
+	 * @return rating of player positioning
+	 */
+	private int positionRating(Board board, boolean color) {
+		Tile[][] tiles = board.getTiles();
+		int playerPositionScore = 0;
 
-	int[][] wPawnPos = {
-			{},
-			{},
-			{},
-			{},
-			{},
-			{},
-			{},
-			{}
-	};
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
+				if (tiles[i][j].isOccupied()) {
+					if (tiles[i][j].getPiece().getColor() == color) {
+						playerPositionScore += positionValues.ratePiece(tiles[i][j].getPiece(), i, j);
+					}
+				}
+			}
+		}
+		return playerPositionScore;
+	}
 
 }

@@ -33,7 +33,29 @@ Some macs have Java preinstalled so try running the chesstrainer.jar file by ctr
 
 ### Usage
 
-When you have opened the program, if you do not know how to play chess or need a refresher feel free to go through the 'Chess Tutorial' section. 'Start Game' will take you through a 5 question preliminary assessment to gauge your skill level when you go against the AI. To make a move click on the piece you want to move, drag it to the tile you want to place it, and release the mouse button to make your move when it is your turn. When you select a piece there will be blue circles indicating the piece's possible moves and the numbers inside of them indicates the rated effectiveness of that move. At any point you can request a move from an AI on the right panel and it will give you a move recommendation. You'll also notice game updates appear on this panel which will tell you the status of the game such as when a player is in check, checkmate, or stalemate. When the game is complete, a 'Phase Suggestion' option will apear which you can go through to play a game in an AI determined phase. 'Program Information' discusses how to use the software. 'Learn Strategies' will allow you to go through a guided game to learn different strategies (currently limited to "fool's mate".
+#### Chess Tutorial 
+  
+   If you do not know how to play chess or need a refresher feel free to go through this short section! 
+
+#### Start Game 
+
+   This will first take you through a 5 question preliminary assessment to gauge your skill level when you go against the AI. Afterwards you will select the color you wish to play as and then start the game. 
+   
+   To make a move while it's your turn, click on the piece you want to move, drag it to the tile you want to place it, and release the mouse button to make your move. You'll notice that as you select a piece there will be blue circles...these are indicating the piece's possible moves while the numbers inside of them indicates the rated effectiveness of that move. 
+   
+   At any point you can request a move from an AI on the right panel and it will give you a move recommendation. You'll also notice game updates appear on this panel which will tell you the status of the game such as when a player is in check, checkmate, or stalemate. 
+   
+#### Phase Suggestion
+   
+   When the game is complete, a 'Phase Suggestion' option will apear which you can go through to play a game in an AI determined phase. 
+   
+#### Program Information
+  
+   This discusses how to use the software. 
+   
+#### Learn Strategies 
+
+   This will allow you to go through a guided game to learn different strategies (currently limited to "fool's mate").
 
 ## Feedback
 

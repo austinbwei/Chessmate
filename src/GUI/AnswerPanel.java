@@ -25,7 +25,7 @@ public class AnswerPanel extends JPanel {
 		this.height = (int) size.getHeight();
 		setBackground(Color.WHITE);
 
-		instructions.setText("Enter what you think is the best move to make if you're playing as white into the fields below. " +
+		instructions.setText("Playing as white, enter what you think the best move to make is into the fields below. " +
 				 "Enter in the format of 'a1' and 'h1'");
 		instructions.setEditable(false);
 		originTag.setText("Origin:");

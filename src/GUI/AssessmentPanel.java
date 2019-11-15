@@ -96,10 +96,10 @@ public class AssessmentPanel extends JPanel {
 	 * Set AI depth and start the game
 	 */
 	private void testComplete() {
-		if (score == 5) {
+		if (score >= 3) {
 			aiPlayer.setDepth(3);
 			mainFrame.setAIDepth(3);
-		} else if (score >= 3) {
+		} else if (score >= 1) {
 			aiPlayer.setDepth(2);
 			mainFrame.setAIDepth(2);
 		} else {

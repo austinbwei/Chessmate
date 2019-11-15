@@ -203,11 +203,12 @@ public class BoardPanel extends JPanel implements MouseListener {
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
+		availableMoves.clear();
+		removeCircles();
+		revalidate();
+		repaint();
+
 		if (!aiThinking && playerTurn && !board.isGameOver()) {
-			availableMoves.clear();
-			removeCircles();
-			revalidate();
-			repaint();
 
 			if (e.getX() < 8 * squareWidth && e.getY() < 8 * squareHeight) {
 				destMouseX = e.getX();

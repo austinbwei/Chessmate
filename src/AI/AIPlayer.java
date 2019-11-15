@@ -73,7 +73,7 @@ public class AIPlayer {
 	 * @return most valuable move
 	 */
 	public Move suggestMove() {
-		return alphaBeta(board, aiColor, Float.NEGATIVE_INFINITY, Float.POSITIVE_INFINITY, 4);
+		return alphaBeta(board, aiColor, Float.NEGATIVE_INFINITY, Float.POSITIVE_INFINITY, 3);
 	}
 
 	/**

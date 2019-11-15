@@ -102,7 +102,7 @@ public class StandardEvaluator implements BoardEvaluator {
 	 */
 	private int stalemate(Board board, boolean color) {
 		if (board.isInStalemate(!color)) {
-			return 300;
+			return 200;
 		} else {
 			return 0;
 		}
